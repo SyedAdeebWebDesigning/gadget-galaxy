@@ -51,7 +51,7 @@ const NavBar = () => {
 	const user: User | any = currentUser();
 	if (!user) return null;
 	return (
-		<header className="text-gray-100 body-font bg-[#1b1b1b]">
+		<header className="text-gray-100 body-font bg-[#1b1b1b]/80 backdrop-blur-lg sticky top-0 bottom-0 w-full z-50">
 			<div className="px-10 mx-auto flex py-5 flex-row items-center justify-between">
 				<Link href="/" className="hidden sm:flex">
 					<Image
@@ -62,10 +62,16 @@ const NavBar = () => {
 						priority
 					/>
 				</Link>
-				<Link href="/" className="sm:hidden">
-					<Image alt="logo" width={50} height={50} src="/logo.png" priority />
+				<Link href="/" className="sm:hidden object-cover">
+					<Image
+						alt="logo"
+						width={250}
+						height={250}
+						src="/logoSmall.svg"
+						priority
+					/>
 				</Link>
-				<nav className="-ml-32 hidden lg:flex">
+				<nav className="-ml-32 hidden xl:flex">
 					{navLinks.map((navLink) => (
 						<Link key={navLink.title} href={navLink.link} className="navLinks">
 							{navLink.title}
@@ -97,7 +103,7 @@ const NavBar = () => {
 					>
 						<IoBagHandleSharp className="w-9 h-9 p-1 rounded-full bg-black text-clip" />
 					</div>
-					<div className="lg:hidden">
+					<div className="xl:hidden">
 						<DropdownMenu>
 							<DropdownMenuTrigger>
 								<RiMenu3Fill className="h-8 w-8 mt-2" />

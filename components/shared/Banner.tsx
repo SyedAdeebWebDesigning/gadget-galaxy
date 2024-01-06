@@ -6,9 +6,9 @@ type Props = {};
 
 const Banner = (props: Props) => {
 	return (
-		<section className="text-gray-200 body-font w-full">
+		<section className="text-gray-200 body-font w-full min-h-[100vh]">
 			<div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col lg:flex-row">
-				<div className="relative h-[800px] flex items-center justify-center">
+				<div className="relative md:h-[800px] h-[500px] flex items-center justify-center">
 					<div
 						className="relative w-[300px] h-[300px] sm:w-[300px] sm:h-[300px] md:w-[500px] md:h-[500px]
 					lg:w-[600px] lg:h-[600px] object-contain md:mx-20 filter"
@@ -25,7 +25,7 @@ const Banner = (props: Props) => {
 						One Plus Nord CE 3 Lite 5G
 					</h1>
 					<p className="mb-4 leading-relaxed text-white text-4xl">
-						Starting at ₹79,999
+						Starting at ₹29,999
 					</p>
 					<div className="flex lg:justify-start justify-center space-x-4">
 						<Button variant="default">View Product</Button>
