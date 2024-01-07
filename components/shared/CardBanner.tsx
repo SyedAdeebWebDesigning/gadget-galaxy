@@ -35,12 +35,12 @@ const CardBanner = (props: Props) => {
 			height: 300,
 		},
 		{
-			title: "ASUS ROG Strix G16 (2023) Gaming Laptop",
+			title: "Apple MacBook Air M2",
 			category: "Laptops",
 			link: "/laptops",
-			price: "₹2,49,999",
-			picture: "/rog-laptop.jpg",
-			width: 450,
+			price: "₹1,09,999",
+			picture: "/laptop.webp",
+			width: 500,
 			height: 300,
 		},
 	];
@@ -56,7 +56,7 @@ const CardBanner = (props: Props) => {
 					>
 						<Link
 							href={cardBanner.link}
-							className="flex items-center justify-center rounded-t-xl bg-gradient-to-t from-transparent to-gray-200"
+							className="flex items-center justify-center rounded-t-xl bg-gradient-to-t from-transparent to-slate-300"
 						>
 							<Image
 								src={cardBanner.picture}

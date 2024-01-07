@@ -43,6 +43,14 @@ const NavBar = () => {
 			link: "/watches",
 		},
 		{
+			title: "Headphones",
+			link: "/headphones",
+		},
+		{
+			title: "Adeflix",
+			link: "/adeflix",
+		},
+		{
 			title: "About",
 			link: "/about",
 		},
@@ -51,7 +59,7 @@ const NavBar = () => {
 	const user: User | any = currentUser();
 	if (!user) return null;
 	return (
-		<header className="text-gray-100 body-font bg-[#1b1b1b]/80 backdrop-blur-lg sticky top-0 bottom-0 w-full z-50">
+		<header className="text-gray-100 body-font bg-[#1b1b1b]/90 backdrop-blur-lg sticky top-0 bottom-0 w-full z-50">
 			<div className="px-10 mx-auto flex py-5 flex-row items-center justify-between">
 				<Link href="/" className="hidden sm:flex">
 					<Image
@@ -71,7 +79,7 @@ const NavBar = () => {
 						priority
 					/>
 				</Link>
-				<nav className="-ml-32 hidden xl:flex">
+				<nav className="-ml-10 hidden xl:flex">
 					{navLinks.map((navLink) => (
 						<Link key={navLink.title} href={navLink.link} className="navLinks">
 							{navLink.title}
