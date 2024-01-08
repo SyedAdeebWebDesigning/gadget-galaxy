@@ -68,7 +68,7 @@
 
 @layer base {
 	* {
-		@apply border-border;
+		@apply border-border scroll-smooth;
 	}
 	body {
 		@apply bg-background text-foreground;
@@ -80,5 +80,8 @@
 
 	.text-shadow {
 		text-shadow: 2px 2px 30px white;
+	}
+	.text-shadow-black {
+		text-shadow: 2px 2px 4px black;
 	}
 }

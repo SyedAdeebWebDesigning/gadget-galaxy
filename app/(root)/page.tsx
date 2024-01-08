@@ -1,6 +1,7 @@
 import Banner from "@/components/shared/Banner";
 import CardBanner from "@/components/shared/CardBanner";
 import Exclusive from "@/components/shared/Exclusive";
+import { Movies } from "@/components/shared/Movies";
 
 export default function Home() {
 	return (
@@ -10,6 +11,7 @@ export default function Home() {
 			</div>
 			<CardBanner />
 			<Exclusive />
+			<Movies />
 		</div>
 	);
 }

@@ -48,7 +48,7 @@ const NavBar = () => {
 		},
 		{
 			title: "Adeflix",
-			link: "/adeflix",
+			link: "#adeflix",
 		},
 		{
 			title: "About",

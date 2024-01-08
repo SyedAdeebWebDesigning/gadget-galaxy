@@ -6,8 +6,8 @@ type Props = {};
 
 const Exclusive = (props: Props) => {
 	return (
-		<div className="relative mt-40">
-			<div className="bg-gradient-to-br from-[#1b1b1b] to-[#282828] w-full h-full skew-y-6 absolute top-0 -z-20" />
+		<div className="relative mt-10">
+			<div className="bg-gradient-to-br from-[#1b1b1b] to-[#282828] w-full h-full skew-y-0 absolute top-0 -z-20" />
 			<h3 className="text-gray-100 text-center text-4xl font-semibold pt-10 ">
 				Exclusive Product
 			</h3>
