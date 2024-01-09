@@ -3,6 +3,8 @@ import "../globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark, neobrutalism } from "@clerk/themes";
+import Footer from "@/components/shared/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +20,12 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<ClerkProvider>
 				<body className={inter.className}>
 					<NavBar />
 					<main>{children}</main>
+					<Footer />
 				</body>
 			</ClerkProvider>
 		</html>

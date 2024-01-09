@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Movies() {
 	const plugin = React.useRef(
@@ -42,7 +43,11 @@ export function Movies() {
 		},
 	];
 	return (
-		<div className="relative mt-10" id="adeflix">
+		<Link
+			href={"https://adeflix-olive.vercel.app/"}
+			className="relative mt-10"
+			id="adeflix"
+		>
 			<Carousel
 				className="w-full flex items-center justify-center max-w-full mt-[10px] -mb-[10px]"
 				plugins={[plugin.current]}
@@ -83,6 +88,6 @@ export function Movies() {
 					))}
 				</CarouselContent>
 			</Carousel>
-		</div>
+		</Link>
 	);
 }

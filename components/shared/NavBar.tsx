@@ -1,15 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import {
-	UserButton,
-	SignInButton,
-	SignedIn,
-	SignOutButton,
-	SignedOut,
-} from "@clerk/nextjs";
+import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/server";
 import { MdLogin } from "react-icons/md";
 import { RiMenu3Fill } from "react-icons/ri";
 import { IoBagHandleSharp } from "react-icons/io5";
@@ -20,15 +13,15 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const NavBar = () => {
+const NavBar = async () => {
 	const navLinks = [
 		{
 			title: "Store",
 			link: "/store",
 		},
 		{
-			title: "Mobile",
-			link: "/mobile",
+			title: "Mobiles",
+			link: "/mobiles",
 		},
 		{
 			title: "Tabs",
@@ -56,10 +49,11 @@ const NavBar = () => {
 		},
 	];
 
-	const user: User | any = currentUser();
+	const user = await currentUser();
 	if (!user) return null;
+
 	return (
-		<header className="text-gray-100 body-font bg-[#1b1b1b]/90 backdrop-blur-lg sticky top-0 bottom-0 w-full z-50">
+		<header className="text-gray-100 body-font bg-[#1b1b1b]/90 backdrop-blur-xl sticky top-0 bottom-0 w-full z-50">
 			<div className="px-10 mx-auto flex py-5 flex-row items-center justify-between">
 				<Link href="/" className="hidden sm:flex">
 					<Image
