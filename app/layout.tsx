@@ -1,5 +1,5 @@
 import NavBar from "@/components/shared/NavBar";
-import "../globals.css";
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -24,7 +24,7 @@ export default function RootLayout({
 			<ClerkProvider>
 				<body className={inter.className}>
 					<NavBar />
-					<main>{children}</main>
+					{children}
 					<Footer />
 				</body>
 			</ClerkProvider>
