@@ -12,6 +12,7 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "../ui/button";
 
 const NavBar = async () => {
 	const navLinks = [
@@ -49,8 +50,12 @@ const NavBar = async () => {
 		},
 	];
 
+	let isAdmin: boolean = true;
 	const user = await currentUser();
-	if (!user) return null;
+	const userId: string | any = `${user?.id}`;
+	if (userId !== "user_2ajlzuzJWEBUKx2TBZOBfIVy95J") {
+		isAdmin = false;
+	}
 
 	return (
 		<header className="text-gray-100 body-font bg-[#1b1b1b]/90 backdrop-blur-xl sticky top-0 bottom-0 w-full z-50">
@@ -79,6 +84,11 @@ const NavBar = async () => {
 							{navLink.title}
 						</Link>
 					))}
+					{isAdmin && (
+						<Link href={"/admin"} className="navLinks">
+							Dashboard
+						</Link>
+					)}
 				</nav>
 				<nav className="flex items-center justify-center space-x-4">
 					<SignedIn>
@@ -92,10 +102,13 @@ const NavBar = async () => {
 					<SignedOut>
 						<SignInButton>
 							<div className="flex px-3 rounded-xl cursor-pointer justify-center items-center">
-								<MdLogin className="w-5 h-5" />
-								<p className="text-light-2 max-lg:hidden gap-4 p-4 text-xl">
+								<Button
+									variant={"link"}
+									className="text-light-2 max-lg:hidden gap-4 p-4 text-xl"
+								>
+									<MdLogin className="w-5 h-5" />
 									Login
-								</p>
+								</Button>
 							</div>
 						</SignInButton>
 					</SignedOut>
@@ -118,6 +131,13 @@ const NavBar = async () => {
 										</DropdownMenuLabel>
 									</Link>
 								))}
+								{isAdmin && (
+									<Link href={"/admin"} className="">
+										<DropdownMenuLabel className="cursor-pointer">
+											Dashboard
+										</DropdownMenuLabel>
+									</Link>
+								)}
 							</DropdownMenuContent>
 						</DropdownMenu>
 					</div>

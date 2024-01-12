@@ -1,5 +1,8 @@
 import React from "react";
 import { currentUser } from "@clerk/nextjs";
+import Unauthorized from "@/components/admin/Unauthorized";
+import SideBar from "@/components/admin/SideBar";
+import Authenticated from "@/components/admin/Authenticated";
 
 type Props = {};
 
@@ -12,7 +15,7 @@ const Admin = async (props: Props) => {
 		isAdmin = false;
 	}
 
-	return <div>{isAdmin ? "True" : "False"}</div>;
+	return <div>{isAdmin ? <Authenticated /> : <Unauthorized />}</div>;
 };
 
 export default Admin;
