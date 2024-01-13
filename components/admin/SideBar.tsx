@@ -13,7 +13,7 @@ type Props = {
 };
 
 const SideBar = ({ fullName, userImg }: Props) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(true);
 
 	const sideBarLinks = [
 		{
@@ -70,7 +70,7 @@ const SideBar = ({ fullName, userImg }: Props) => {
 				}`}
 				aria-label="Sidebar"
 			>
-				<div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 relative">
+				<div className="h-full px-3 py-4 overflow-y-auto bg-gray-400/10 shadow-lg shadow-gray-400 dark:bg-gray-800 relative backdrop-blur-lg">
 					<ul className="font-medium ">
 						<div className="w-full mt-30 bg-black py-2 rounded-lg">
 							<div className="flex space-x-2 justify-center items-center">
