@@ -10,9 +10,10 @@ import Image from "next/image";
 type Props = {
 	fullName: string;
 	userImg: string;
+	link: string;
 };
 
-const SideBar = ({ fullName, userImg }: Props) => {
+const SideBar = ({ fullName, userImg, link }: Props) => {
 	const [isOpen, setIsOpen] = useState(true);
 
 	const sideBarLinks = [
@@ -45,7 +46,7 @@ const SideBar = ({ fullName, userImg }: Props) => {
 				aria-controls="default-sidebar"
 				type="button"
 				onClick={() => setIsOpen(true)}
-				className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+				className="inline-flex items-center fixed  p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
 			>
 				<span className="sr-only">Open sidebar</span>
 				<svg
@@ -84,11 +85,17 @@ const SideBar = ({ fullName, userImg }: Props) => {
 								<h3 className="text-white">Welcome {fullName}</h3>
 							</div>
 						</div>
-						{sideBarLinks.map((link, i) => (
-							<Link key={i} href={link.link} className="">
-								<div className="flex space-x-4 my-20 ml-5 justify-start items-center hover:bg-gray-200 py-4 px-2 rounded-lg transition-all duration-150 ease-in-out">
-									<link.icon className="w-7 h-7" />
-									<h3>{link.title}</h3>
+						{sideBarLinks.map((links, i) => (
+							<Link key={i} href={links.link} className="">
+								<div
+									className={`flex space-x-4 my-20 ml-5 justify-start items-center hover:bg-gray-200 py-4 px-2 rounded-lg transition-all duration-150 ease-in-out ${
+										link === links.link
+											? "bg-slate-900 text-white hover:bg-slate-900"
+											: ""
+									}`}
+								>
+									<links.icon className="w-7 h-7" />
+									<h3>{links.title}</h3>
 								</div>
 							</Link>
 						))}

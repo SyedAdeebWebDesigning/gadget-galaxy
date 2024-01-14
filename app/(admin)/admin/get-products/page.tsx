@@ -28,13 +28,17 @@ const getProducts = async (props: Props) => {
 
 	return (
 		<main className="grid grid-flow-row cols">
-			<SideBar fullName={fullName} userImg={userImg} />
+			<SideBar
+				fullName={fullName}
+				userImg={userImg}
+				link="/admin/get-products"
+			/>
 			<section className="text-gray-600 body-font">
 				<div className="container px-5 py-24 mx-auto">
 					<h3 className="text-center text-4xl mb-10">All Products</h3>
 					<div className="flex flex-wrap -m-4 items-center justify-center">
-						{products.map((_, i) => (
-							<div className="p-4 md:w-1/3" key={i}>
+						{products.map((_: any, i: number) => (
+							<div className="p-4 md:w-1/3 w-full" key={i}>
 								<div className="h-full relative rounded-lg overflow-hidden bg-gradient-to-t from-transparent to-gray-300 p-5">
 									<div className="relative w-60 h-60 flex justify-center items-center mx-auto aspect-square">
 										<Image
@@ -45,16 +49,18 @@ const getProducts = async (props: Props) => {
 										/>
 									</div>
 									<DeleteButton id={_.id} name={_.name} />
-									<div className="p-6">
+									<div className="py-6">
 										<h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
 											{_.category}
 										</h2>
-										<h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-											{_.name}
-										</h1>
-										<p className="leading-relaxed mb-3 truncate w-full">
-											{_.desc}
-										</p>
+										<div className="flex justify-between  w-full">
+											<h1 className="title-font text-lg font-medium text-gray-900 mb-3 truncate">
+												{_.name}
+											</h1>
+											<h1 className="title-font text-lg font-medium text-gray-500 mb-3">
+												₹{new Intl.NumberFormat("en-IN").format(_.price)}
+											</h1>
+										</div>
 									</div>
 								</div>
 							</div>

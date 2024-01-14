@@ -22,7 +22,11 @@ const getProducts = async (props: Props) => {
 	}
 	return (
 		<main className="grid grid-flow-row cols">
-			<SideBar fullName={fullName} userImg={userImg} />
+			<SideBar
+				fullName={fullName}
+				userImg={userImg}
+				link="/admin/add-products"
+			/>
 			<Products />
 		</main>
 	);

@@ -42,7 +42,7 @@ const NavBar = async () => {
 		},
 		{
 			title: "Adeflix",
-			link: "#adeflix",
+			link: "/#adeflix",
 		},
 		{
 			title: "About",
