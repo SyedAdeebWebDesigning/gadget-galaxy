@@ -2,7 +2,7 @@ import NavBar from "@/components/shared/NavBar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, currentUser } from "@clerk/nextjs";
 import Footer from "@/components/shared/Footer";
 import { Toaster } from "react-hot-toast";
 
@@ -14,11 +14,12 @@ export const metadata: Metadata = {
 	icons: "/logo.png",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
+	const userData = await currentUser();
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<ClerkProvider>

@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-	_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		default: () => new mongoose.Types.ObjectId(),
+	userId: {
+		type: String,
+		required: true,
 	},
 	email: {
 		type: String,
@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
 	fullName: {
 		type: String,
 	},
+	isAdmin: {
+		type: Boolean,
+		default: false,
+	},
 	address: {
 		type: String,
 	},
@@ -24,12 +28,9 @@ const userSchema = new mongoose.Schema({
 	state: {
 		type: String,
 	},
-	pincode: {
-		type: Number,
+	pinCode: {
+		type: String,
 	},
-	cart: [
-		{ type: mongoose.Schema.Types.ObjectId, ref: "Cart", required: false },
-	], // Assuming that the user can have multiple items in the cart
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
