@@ -102,3 +102,49 @@ export async function fetchUserById(
 		throw new Error(`Failed to fetch users: ${error.message}`);
 	}
 }
+
+/**
+ * Makes a user an admin.
+ *
+ * @param {string} userId - The ID of the user.
+ * @return {Promise<void>} - A promise that resolves when the user is made an admin.
+ */
+export async function makeAdmin(userId: string): Promise<void> {
+	try {
+		const user = await Users.findOne({ userId: userId });
+
+		if (!user) {
+			throw new Error(`User not found with userId: ${userId}`);
+		}
+
+		user.isAdmin = true;
+		await user.save();
+
+		console.log(`User with userId ${userId} is now an admin.`);
+	} catch (error: any) {
+		throw new Error(`Failed to make user admin: ${error.message}`);
+	}
+}
+
+/**
+ * Makes a user a non-admin.
+ *
+ * @param {string} userId - The ID of the user.
+ * @return {Promise<void>} - A promise that resolves when the user is made a non-admin.
+ */
+export async function makeNonAdmin(userId: string): Promise<void> {
+	try {
+		const user = await Users.findOne({ userId: userId });
+
+		if (!user) {
+			throw new Error(`User not found with userId: ${userId}`);
+		}
+
+		user.isAdmin = false;
+		await user.save();
+
+		console.log(`User with userId ${userId} is now a non-admin.`);
+	} catch (error: any) {
+		throw new Error(`Failed to make user non-admin: ${error.message}`);
+	}
+}

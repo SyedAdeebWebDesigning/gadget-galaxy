@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { addUser } from "@/lib/actions/users.actions";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -46,10 +46,28 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 				state: state,
 				pinCode: pinCode,
 			});
-			toast.success("Details added successfully");
+			toast.success(`Details added successfully`, {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
 			router.push("/");
 		} catch (error: any) {
-			toast.error(`Error adding the details ${error.message}`);
+			toast.error(`Errors adding details`, {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
 		}
 	};
 
@@ -137,8 +155,7 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 						<Button
 							variant={"secondary"}
 							onClick={() => router.back()}
-							className="w-full"
-						>
+							className="w-full">
 							Go back
 						</Button>
 					</div>
@@ -146,8 +163,7 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 					<Button
 						variant={"secondary"}
 						onClick={handleContinue}
-						className="w-full"
-					>
+						className="w-full">
 						Continue
 					</Button>
 				)}

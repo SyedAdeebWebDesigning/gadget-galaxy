@@ -1,7 +1,6 @@
 import Users from "@/components/form/Users";
 import { fetchUserById } from "@/lib/actions/users.actions";
 import { currentUser } from "@clerk/nextjs";
-import toast from "react-hot-toast";
 
 type Props = {};
 

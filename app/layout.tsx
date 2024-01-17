@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider, currentUser } from "@clerk/nextjs";
 import Footer from "@/components/shared/Footer";
-import { Toaster } from "react-hot-toast";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,7 +24,19 @@ export default async function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<ClerkProvider>
 				<body className={inter.className}>
-					<Toaster />
+					<ToastContainer
+						position="top-right"
+						stacked
+						autoClose={5000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+						theme="light"
+					/>
 					<NavBar />
 					{children}
 					<Footer />

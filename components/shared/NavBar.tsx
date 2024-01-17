@@ -13,6 +13,8 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
+import { fetchUserById } from "@/lib/actions/users.actions";
+import ToUser from "../redirects/toUser";
 
 const NavBar = async () => {
 	const navLinks = [
@@ -50,12 +52,11 @@ const NavBar = async () => {
 		},
 	];
 
-	let isAdmin: boolean = true;
-	const user = await currentUser();
+	const user: any = await currentUser();
+	if (!user) return null;
 	const userId: string | any = `${user?.id}`;
-	if (userId !== "user_2ajlzuzJWEBUKx2TBZOBfIVy95J") {
-		isAdmin = false;
-	}
+	const mongoUser: any = await fetchUserById(userId);
+	if (!mongoUser) <ToUser />;
 
 	return (
 		<header className="text-gray-100 body-font bg-[#1b1b1b]/90 backdrop-blur-xl sticky top-0 bottom-0 w-full z-50">
@@ -84,7 +85,7 @@ const NavBar = async () => {
 							{navLink.title}
 						</Link>
 					))}
-					{isAdmin && (
+					{mongoUser?.isAdmin && (
 						<Link href={"/admin"} className="navLinks">
 							Dashboard
 						</Link>
@@ -94,8 +95,7 @@ const NavBar = async () => {
 					<SignedIn>
 						<div
 							className="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full
-                         h-10 w-10 flex justify-center items-center hover:animate-pulse cursor-pointer"
-						>
+                         h-10 w-10 flex justify-center items-center hover:animate-pulse cursor-pointer">
 							<UserButton />
 						</div>
 					</SignedIn>
@@ -104,8 +104,7 @@ const NavBar = async () => {
 							<div className="flex px-3 rounded-xl cursor-pointer justify-center items-center">
 								<Button
 									variant={"link"}
-									className="text-light-2 max-lg:hidden gap-4 p-4 text-xl"
-								>
+									className="text-light-2 max-lg:hidden gap-4 p-4 text-xl">
 									<MdLogin className="w-5 h-5" />
 									Login
 								</Button>
@@ -114,8 +113,7 @@ const NavBar = async () => {
 					</SignedOut>
 					<div
 						className=" bg-gradient-to-r from-indigo-500 to-purple-500 w-11 h-11
-                     rounded-full flex items-center justify-center cursor-pointer hover:animate-pulse"
-					>
+                     rounded-full flex items-center justify-center cursor-pointer hover:animate-pulse">
 						<IoBagHandleSharp className="w-9 h-9 p-1 rounded-full bg-black text-clip" />
 					</div>
 					<div className="xl:hidden">
@@ -131,7 +129,7 @@ const NavBar = async () => {
 										</DropdownMenuLabel>
 									</Link>
 								))}
-								{isAdmin && (
+								{mongoUser?.isAdmin && (
 									<Link href={"/admin"} className="">
 										<DropdownMenuLabel className="cursor-pointer">
 											Dashboard

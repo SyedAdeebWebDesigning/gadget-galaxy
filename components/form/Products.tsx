@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { addProduct } from "@/lib/actions/product.actions";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 type Props = {};
 
@@ -37,7 +37,6 @@ const Products = (props: Props) => {
 	};
 
 	const handleAddProduct = () => {
-		// Add logic to handle the product addition, including sending the data to the server
 		addProduct({
 			name: name,
 			category: category,
@@ -47,13 +46,22 @@ const Products = (props: Props) => {
 		});
 		setPicture(null);
 		setImagePreview(null);
-		toast.success(`Product ${name} added successfully.`);
+		toast(`Product ${name} successfully added`, {
+			position: "top-right",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+		});
 		router.push("/admin/get-products");
 	};
 
 	return (
 		<div>
-			<section className="container lg:w-2/3 xl:w-1/3 sm:w-2/3 w-full">
+			<section className="container lg:w-2/3 xl:w-1/3 sm:w-2/3 w-full my-10">
 				<h3 className="text-center text-4xl mb-10">Add Product</h3>
 				<div className="space-y-5 bg-gray-200 p-5 rounded-xl">
 					<Input
@@ -100,10 +108,9 @@ const Products = (props: Props) => {
 						</div>
 					)}
 					<Button
-						variant={"secondary"}
+						variant={"default"}
 						onClick={handleAddProduct}
-						className="w-full"
-					>
+						className="w-full">
 						Add Product
 					</Button>
 				</div>

@@ -1,7 +1,7 @@
 "use client";
 import { deleteProduct } from "@/lib/actions/product.actions";
 import React from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import {
@@ -42,10 +42,18 @@ const DeleteButton = ({ id, name }: string | any) => {
 						<AlertDialogAction
 							onClick={() => {
 								deleteProduct(id);
-								toast.success(`Product ${name} successfully deleted`);
+								toast(`Product ${name} successfully removed`, {
+									position: "top-right",
+									autoClose: 5000,
+									hideProgressBar: false,
+									closeOnClick: true,
+									pauseOnHover: true,
+									draggable: true,
+									progress: undefined,
+									theme: "light",
+								});
 								router.refresh();
-							}}
-						>
+							}}>
 							Delete
 						</AlertDialogAction>
 					</AlertDialogFooter>

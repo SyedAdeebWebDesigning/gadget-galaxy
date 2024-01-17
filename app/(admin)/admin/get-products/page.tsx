@@ -5,26 +5,23 @@ import Unauthorized from "@/components/admin/Unauthorized";
 import { fetchProducts } from "@/lib/actions/product.actions";
 import Image from "next/image";
 import DeleteButton from "@/components/admin/DeleteButton";
+import { fetchUserById } from "@/lib/actions/users.actions";
 
 type Props = {};
 
 const getProducts = async (props: Props) => {
-	let isAdmin: boolean = true;
-	const user = await currentUser();
+	const user: any = await currentUser();
 	if (!user) return null;
 	const userId: string | any = `${user?.id}`;
-	if (userId !== "user_2ajlzuzJWEBUKx2TBZOBfIVy95J") {
-		isAdmin = false;
-	}
+	const mongoUser: any = await fetchUserById(userId);
 	const fullName = `${user?.firstName} ${user?.lastName}`;
 	const userImg = `${user?.imageUrl}`;
 
-	if (!isAdmin) {
+	if (!mongoUser?.isAdmin) {
 		return <Unauthorized />;
 	}
 
 	const products = await fetchProducts();
-	// console.log(`products ${products[0]}`);
 
 	return (
 		<main className="grid grid-flow-row cols">
