@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { addProduct } from "@/lib/actions/product.actions";
 import { toast } from "react-toastify";
+import { Label } from "../ui/label";
 
 type Props = {};
 
@@ -17,7 +18,7 @@ const Products = (props: Props) => {
 	const [picture, setPicture] = useState<File | null>(null);
 	const [description, setDescription] = useState<string>("");
 	const [imagePreview, setImagePreview] = useState<string | any>(null);
-
+	const [isFeatureable, setIsFeatureable] = useState<boolean | any>(false);
 	const router = useRouter();
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,6 +44,7 @@ const Products = (props: Props) => {
 			desc: description,
 			price: price,
 			imgUrl: imagePreview,
+			isFeatured: isFeatureable,
 		});
 		setPicture(null);
 		setImagePreview(null);
@@ -56,7 +58,7 @@ const Products = (props: Props) => {
 			progress: undefined,
 			theme: "light",
 		});
-		router.push("/admin/get-products");
+		router.push("/admin/dashboard");
 	};
 
 	return (
@@ -91,6 +93,17 @@ const Products = (props: Props) => {
 						onChange={(e) => setDescription(e.target.value)}
 					/>
 					<Input id="picture" type="file" onChange={handleFileChange} />
+					<div className="flex items-center space-x-2">
+						<Input
+							type="checkbox"
+							className="w-5 h-5 text-sm"
+							checked={isFeatureable}
+							onChange={(e) => setIsFeatureable(!isFeatureable)}
+						/>
+						<div className="h-6 w-full">
+							<span className="">Is Featured?</span>
+						</div>
+					</div>
 					{imagePreview && (
 						<div className="relative h-40 w-40 sm:w-[80%] sm:h-60 flex items-center justify-center mx-auto object-cover">
 							<Image

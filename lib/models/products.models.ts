@@ -18,10 +18,9 @@ const productSchema = new mongoose.Schema({
 	category: {
 		type: String,
 	},
-	// cartId: {
-	// 	type: mongoose.Schema.Types.ObjectId,
-	// 	ref: "Cart",
-	// },
+	isFeatured: {
+		type: Boolean,
+	},
 });
 
 const Product =

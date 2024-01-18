@@ -7,7 +7,7 @@ type Props = {};
 
 const Authenticated = (props: Props) => {
 	const router = useRouter();
-	router.push("/admin/get-products");
+	router.push("/admin/dashboard");
 	return (
 		<div className="text-center flex justify-center items-center min-h-[60vh] space-x-4">
 			<div className="animate-spin rounded-full w-10 h-10">

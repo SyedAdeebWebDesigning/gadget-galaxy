@@ -19,12 +19,14 @@ export async function addProduct({
 	price,
 	desc,
 	imgUrl,
+	isFeatured,
 }: {
 	name: string;
 	category: string;
 	price: number;
 	desc: string;
 	imgUrl: string;
+	isFeatured: boolean;
 }) {
 	try {
 		await Product.create({
@@ -33,6 +35,7 @@ export async function addProduct({
 			price,
 			desc,
 			imgUrl,
+			isFeatured,
 		});
 	} catch (error: any) {
 		throw new Error(`Failed to create/update product: ${error.message}`);
@@ -68,5 +71,19 @@ export async function deleteProduct(productId: string): Promise<void> {
 		});
 	} catch (error: any) {
 		throw new Error(`Failed to delete product: ${error.message}`);
+	}
+}
+
+/**
+ * Fetches the featured products.
+ *
+ * @return {Promise<any>} - Returns a promise that resolves to an array of featured products.
+ */
+export async function fetchFeaturedProducts(): Promise<any> {
+	try {
+		const products = await Product.find({ isFeatured: true });
+		return products;
+	} catch (error: any) {
+		throw new Error(`Failed to fetch featured products: ${error.message}`);
 	}
 }
