@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useRouter } from "next/navigation";
 import { addProduct } from "@/lib/actions/exclusive.actions";
 import { addProduct as Product } from "@/lib/actions/product.actions";

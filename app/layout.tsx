@@ -21,7 +21,7 @@ export default async function RootLayout({
 }) {
 	const userData = await currentUser();
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en" suppressHydrationWarning className="overflow-x-auto">
 			<ClerkProvider>
 				<body className={inter.className}>
 					<ToastContainer

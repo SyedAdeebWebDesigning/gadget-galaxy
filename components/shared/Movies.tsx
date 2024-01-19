@@ -9,7 +9,7 @@ import {
 	CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 
 export function Movies() {

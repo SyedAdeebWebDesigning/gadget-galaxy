@@ -4,7 +4,7 @@ import SideBar from "@/components/admin/SideBar";
 import Unauthorized from "@/components/admin/Unauthorized";
 import Products from "@/components/form/Products";
 import { fetchUserById } from "@/lib/actions/users.actions";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import FormExclusive from "@/components/form/FormExclusive";

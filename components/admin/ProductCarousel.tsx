@@ -7,7 +7,7 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from "../ui/carousel";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { Badge } from "../ui/badge";
 import DeleteButton from "./DeleteButton";
 import Autoplay from "embla-carousel-autoplay";

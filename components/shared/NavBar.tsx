@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import React from "react";
 import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
@@ -20,7 +20,7 @@ const NavBar = async () => {
 	const navLinks = [
 		{
 			title: "Store",
-			link: "/store",
+			link: "/store?page=1",
 		},
 		{
 			title: "Mobiles",
@@ -61,21 +61,23 @@ const NavBar = async () => {
 	return (
 		<header className="text-gray-100 body-font bg-[#1b1b1b]/90 backdrop-blur-xl sticky top-0 bottom-0 w-full z-50">
 			<div className="px-10 mx-auto flex py-5 flex-row items-center justify-between">
-				<Link href="/" className="hidden sm:flex">
+				<Link href="/" className="hidden sm:flex object-cover h-10">
 					<Image
 						alt="logo"
 						width={250}
 						height={100}
 						src="/logo-2.svg"
+						objectFit="contain"
 						priority
 					/>
 				</Link>
-				<Link href="/" className="sm:hidden object-cover">
+				<Link href="/" className="sm:hidden h-10">
 					<Image
 						alt="logo"
-						width={250}
-						height={250}
-						src="/logoSmall.svg"
+						width={100}
+						height={40}
+						src="/ls.svg"
+						objectFit="contain"
 						priority
 					/>
 				</Link>

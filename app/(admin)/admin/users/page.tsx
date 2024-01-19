@@ -27,9 +27,23 @@ const getProducts = async (props: Props) => {
 				<div className="container px-5 py-24 mx-auto">
 					<h3 className="text-center text-4xl mb-10">All Users</h3>
 					<div className="flex flex-col m-4 items-center justify-center">
-						{users.map((user: any, i: number) => (
-							<UserList user={user} key={i} i={i}/>
-						))}
+						<table className="table-auto overflow-x-hidden w-full border border-black/30 shadow-lg">
+							<thead>
+								<tr className="text-left bg-gray-200 underline underline-offset-2 w-auto">
+									<th className="py-3 px-4">S.No</th>
+									<th className="py-3 px-4">Name</th>
+									<th className="py-3 px-4">UserID</th>
+									<th className="py-3 px-4">Email</th>
+									<th className="py-3 px-4">Address</th>
+									<th className="py-3 px-4">Admin</th>
+								</tr>
+							</thead>
+							{users.map((user: any, i: number) => (
+								<>
+									<UserList user={user} key={i} i={i} />
+								</>
+							))}
+						</table>
 					</div>
 				</div>
 			</section>

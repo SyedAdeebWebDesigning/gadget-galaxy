@@ -6,7 +6,7 @@ import { MdDashboard } from "react-icons/md";
 import { FaBox } from "react-icons/fa6";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type Props = {
 	fullName: string;
@@ -72,15 +72,15 @@ const SideBar = ({ fullName, userImg, link }: Props) => {
 					isOpen ? "-translate-x-0" : "-translate-x-full"
 				}`}
 				aria-label="Sidebar">
-				<div className="h-full px-3 py-4 overflow-y-auto bg-indigo-500/10 shadow-lg shadow-gray-400 dark:bg-gray-800 relative backdrop-blur-md">
+				<div className="h-full px-3 py-4 overflow-y-auto bg-indigo-300/10 shadow-lg shadow-gray-400 dark:bg-gray-800 relative backdrop-blur-[9px]">
 					<ul className="font-medium ">
 						{sideBarLinks.map((links, i) => (
 							<Link key={i} href={links.link} className="">
 								<div
-									className={`flex space-x-4 my-20 justify-start items-center hover:bg-indigo-200 p-4 rounded-lg transition-all duration-150 ease-in-out w-full  ${
+									className={`flex space-x-4 my-20 justify-start items-center p-4 rounded-lg transition-all duration-150 ease-in-out w-full text-shadow text-xl ${
 										link === links.link
-											? "bg-gradient-to-tr from-indigo-400 to-purple-400 text-white"
-											: "text-slate-800"
+											? "bg-gradient-to-tr from-indigo-400 to-purple-400 text-white text-shadow-black"
+											: "text-slate-800  bg-gradient-to-tr hover:from-indigo-200 hover:to-purple-200"
 									}`}>
 									<links.icon className="w-7 h-7" />
 									<h3>{links.title}</h3>

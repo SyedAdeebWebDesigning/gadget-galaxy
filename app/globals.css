@@ -79,10 +79,9 @@
 	}
 
 	.text-shadow {
-		text-shadow: 2px 2px 30px white;
+		text-shadow: 1px 1px 1px white;
 	}
 	.text-shadow-black {
 		text-shadow: 2px 2px 4px black;
 	}
-	
 }

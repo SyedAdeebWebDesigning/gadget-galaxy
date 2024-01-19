@@ -43,15 +43,21 @@ export async function addProduct({
 }
 
 /**
- * Fetches products from the database.
+ * Fetches a list of products from the database.
  *
- * @return {Promise<Product[]>} An array of products.
- * @throws {Error} If there was an error fetching the products.
+ * @param {number} pageNumber - The page number to fetch.
+ * @param {number} pageSize - The number of products to fetch per page.
+ * @return {Promise<(typeof Product)[]>} An array of Product objects representing the products.
+ * @throws {Error} If there is an error fetching the products.
  */
-export async function fetchProducts(): Promise<(typeof Product)[]> {
+export async function fetchProducts(
+	pageNumber: number,
+	pageSize: number
+): Promise<(typeof Product)[]> {
+	const skipAmount = (pageNumber - 1) * pageSize;
 	connectToDB();
 	try {
-		const products = await Product.find();
+		const products = await Product.find().skip(skipAmount).limit(pageSize);
 		return products;
 	} catch (error: any) {
 		throw new Error(`Failed to fetch products: ${error.message}`);
@@ -83,6 +89,15 @@ export async function fetchFeaturedProducts(): Promise<any> {
 	try {
 		const products = await Product.find({ isFeatured: true });
 		return products;
+	} catch (error: any) {
+		throw new Error(`Failed to fetch featured products: ${error.message}`);
+	}
+}
+
+export async function countDocument() {
+	try {
+		const count = await Product.countDocuments();
+		return count;
 	} catch (error: any) {
 		throw new Error(`Failed to fetch featured products: ${error.message}`);
 	}

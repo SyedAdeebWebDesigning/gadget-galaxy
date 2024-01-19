@@ -7,7 +7,7 @@ import {
 } from "react-icons/md";
 import { makeNonAdmin, makeAdmin } from "@/lib/actions/users.actions";
 import { toast } from "react-toastify";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -18,68 +18,63 @@ type Props = {
 const UserList = ({ user, i }: Props) => {
 	const router = useRouter();
 	return (
-		<div className="p-4 lg:w-1/2 xl:w-1/3 w-full bg-gradient-to-r shadow-xl group cursor-pointer hover:shadow-2xl transition-all duration-200 from-indigo-200 to-purple-200 m-4 rounded-full flex items-center justify-between space-x-2">
-			<div className="flex space-x-2 items-center">
-				<div>
-					<Image
-						src={user.imgUrl}
-						alt="user"
-						width={50}
-						height={50}
-						className="rounded-full"
-					/>
-				</div>
-				<div className="transition-all duration-400">
-					<h3 className="text-lg">
-						{i + 1}. {user.fullName}
-					</h3>
-					<p className="text-sm text-slate-500">{user?.email}</p>
-				</div>
-			</div>
-			{user.isAdmin === true ? (
-				<div
-					className="hover:scale-110 transition-all duration-100 active:scale-90 bg-gradient-to-tr from-indigo-500 to-purple-500 bg-clip-text text-transparent text-clip"
-					onClick={() => {
-						makeNonAdmin(user?.userId);
-						toast.success(`User ${user?.fullName} is now a non-admin`, {
-							position: "top-right",
-							autoClose: 5000,
-							hideProgressBar: false,
-							closeOnClick: true,
-							pauseOnHover: true,
-							draggable: true,
-							progress: undefined,
-							theme: "light",
-						});
-						router.refresh();
-					}}>
-					<Button variant={"link"}>
-						<MdAdminPanelSettings className="h-7 w-7 text-purple-500 drop-shadow-xl" />
-					</Button>
-				</div>
-			) : (
-				<div
-					className="hover:scale-110 transition-all duration-100 active:scale-90"
-					onClick={() => {
-						makeAdmin(user?.userId);
-						toast.success(`User ${user?.fullName} is now an admin`, {
-							position: "top-right",
-							autoClose: 5000,
-							hideProgressBar: false,
-							closeOnClick: true,
-							pauseOnHover: true,
-							draggable: true,
-							progress: undefined,
-							theme: "light",
-						});
-						router.refresh();
-					}}>
-					<Button variant={"link"}>
-						<MdOutlineAdminPanelSettings className="h-7 w-7" />
-					</Button>
-				</div>
-			)}
-		</div>
+		<tbody className="m-3 space-y-2 ">
+			<tr
+				className={`p-3 space-y-2 ${i % 2 === 0 ? "bg-white" : "bg-gray-200"} ${
+					user.isAdmin && "font-semibold"
+				}`}>
+				<td className="py-3 px-4 overflow-x-scroll">{i + 1}.</td>
+				<td className="py-3 px-4 overflow-x-scroll">{user.fullName}</td>
+				<td className="py-3 px-4 overflow-x-scroll">{user.userId}</td>
+				<td className="py-3 px-4 overflow-x-scroll">{user.email}</td>
+				<td className="py-3 px-4 overflow-x-scroll">
+					{user.address}, {user.city}
+				</td>
+				{user.isAdmin === true ? (
+					<td
+						className="hover:scale-110 transition-all duration-100 active:scale-90 bg-gradient-to-tr from-indigo-500 to-purple-500 bg-clip-text text-transparent text-clip"
+						onClick={() => {
+							makeNonAdmin(user?.userId);
+							toast.success(`User ${user?.fullName} is now a non-admin`, {
+								position: "top-right",
+								autoClose: 5000,
+								hideProgressBar: false,
+								closeOnClick: true,
+								pauseOnHover: true,
+								draggable: true,
+								progress: undefined,
+								theme: "light",
+							});
+							router.refresh();
+						}}>
+						<Button variant={"link"}>
+							<MdAdminPanelSettings className="h-7 w-7 text-purple-500 drop-shadow-xl" />
+						</Button>
+					</td>
+				) : (
+					<td
+						className="hover:scale-110 transition-all duration-100 active:scale-90"
+						onClick={() => {
+							makeAdmin(user?.userId);
+							toast.success(`User ${user?.fullName} is now an admin`, {
+								position: "top-right",
+								autoClose: 5000,
+								hideProgressBar: false,
+								closeOnClick: true,
+								pauseOnHover: true,
+								draggable: true,
+								progress: undefined,
+								theme: "light",
+							});
+							router.refresh();
+						}}>
+						<Button variant={"link"}>
+							<MdOutlineAdminPanelSettings className="h-7 w-7" />
+						</Button>
+					</td>
+				)}
+			</tr>
+		</tbody>
 	);
 };
 
