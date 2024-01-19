@@ -84,4 +84,12 @@
 	.text-shadow-black {
 		text-shadow: 2px 2px 4px black;
 	}
+
+	.bgImg {
+		background-image: url("/banner-back.png");
+		background-repeat: no-repeat;
+		opacity: 0.5;
+		width: 800px;
+		@apply blur-[8px] w-full;
+	}
 }
