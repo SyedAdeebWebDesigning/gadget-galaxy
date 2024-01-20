@@ -12,19 +12,23 @@ const Exclusive = async (props: Props) => {
 	if (!product) return null;
 
 	return (
-		<div>
-			<Link href={"/headphones"} className="relative mt-10" key={product._id}>
-				<div className="bg-gradient-to-br from-[#1b1b1b] to-[#282828] w-full h-full skew-y-0 absolute top-0 -z-20" />
+		<div className=" z-20 flex flex-col items-center">
+			<Link href={"/headphones"} className="relative" key={product._id}>
 				<h3 className="text-gray-100 text-center text-4xl font-semibold pt-10 ">
 					Exclusive Product
 				</h3>
 				<section className="text-gray-400 body-font">
 					<div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
 						<div className="flex flex-col lg:flex-row lg:space-x-40 justify-center items-center">
-							<div className="relative h-[300px] w-[300px] lg:w-[500px] lg:h-[500px] animate-pulse xl:w-[500px] xl:h-[500px] my-10">
-								<Image src={product?.imgUrl} alt="" layout="fill" />
+							<div className="relative h-[300px] w-[300px] lg:w-[500px] lg:h-[500px] animate-pulse xl:w-[700px] xl:h-[600px] my-10">
+								<Image
+									src={product?.imgUrl}
+									alt=""
+									layout="fill"
+									objectFit="contain"
+								/>
 							</div>
-							<div className="text-white text-center lg:text-left space-y-2">
+							<div className=" text-center lg:text-left space-y-2">
 								<p className="my-1 text-3xl">Get this product</p>
 								<h3
 									className="text-3xl lg:text-6xl text-center lg:text-left bg-gradient-to-r from-indigo-400

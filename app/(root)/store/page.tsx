@@ -1,6 +1,4 @@
 import StoreProducts from "@/components/shared/StoreProducts";
-import React, { useState } from "react";
-
 type Props = {
 	searchParams: any;
 };

@@ -59,9 +59,9 @@ const NavBar = async () => {
 	if (!mongoUser) <ToUser />;
 
 	return (
-		<header className="text-gray-100 body-font bg-[#1b1b1b]/90 backdrop-blur-xl sticky top-0 bottom-0 w-full z-50">
+		<header className="text-gray-100 body-font bg-[#000000] text-shadow-black backdrop-blur-2xl sticky h-20 top-0 bottom-0 w-full z-50">
 			<div className="px-10 mx-auto flex py-5 flex-row items-center justify-between">
-				<Link href="/" className="hidden sm:flex object-cover h-10">
+				<a href="/" className="hidden sm:flex object-cover h-10">
 					<Image
 						alt="logo"
 						width={250}
@@ -70,8 +70,8 @@ const NavBar = async () => {
 						objectFit="contain"
 						priority
 					/>
-				</Link>
-				<Link href="/" className="sm:hidden h-10">
+				</a>
+				<a href="/" className="sm:hidden h-10">
 					<Image
 						alt="logo"
 						width={100}
@@ -80,12 +80,12 @@ const NavBar = async () => {
 						objectFit="contain"
 						priority
 					/>
-				</Link>
+				</a>
 				<nav className="-ml-10 hidden xl:flex">
 					{navLinks.map((navLink) => (
-						<Link key={navLink.title} href={navLink.link} className="navLinks">
+						<a key={navLink.title} href={navLink.link} className="navLinks">
 							{navLink.title}
-						</Link>
+						</a>
 					))}
 					{mongoUser?.isAdmin && (
 						<Link href={"/admin"} className="navLinks">
@@ -125,18 +125,18 @@ const NavBar = async () => {
 							</DropdownMenuTrigger>
 							<DropdownMenuContent className="">
 								{navLinks.map((navLink) => (
-									<Link key={navLink.title} href={navLink.link}>
+									<a key={navLink.title} href={navLink.link}>
 										<DropdownMenuLabel className="cursor-pointer">
 											{navLink.title}
 										</DropdownMenuLabel>
-									</Link>
+									</a>
 								))}
 								{mongoUser?.isAdmin && (
-									<Link href={"/admin"} className="">
+									<a href={"/admin"} className="">
 										<DropdownMenuLabel className="cursor-pointer">
 											Dashboard
 										</DropdownMenuLabel>
-									</Link>
+									</a>
 								)}
 							</DropdownMenuContent>
 						</DropdownMenu>

@@ -89,7 +89,8 @@
 		background-image: url("/banner-back.png");
 		background-repeat: no-repeat;
 		opacity: 0.5;
-		width: 800px;
+		width: 100lvw;
 		@apply blur-[8px] w-full;
+		overflow-x: hidden;
 	}
 }

@@ -6,6 +6,7 @@ import { ClerkProvider, currentUser } from "@clerk/nextjs";
 import Footer from "@/components/shared/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Template from "./template";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,7 +22,7 @@ export default async function RootLayout({
 }) {
 	const userData = await currentUser();
 	return (
-		<html lang="en" suppressHydrationWarning className="overflow-x-auto">
+		<html lang="en" suppressHydrationWarning className="overflow-x-hidden">
 			<ClerkProvider>
 				<body className={inter.className}>
 					<ToastContainer
@@ -38,7 +39,7 @@ export default async function RootLayout({
 						theme="light"
 					/>
 					<NavBar />
-					{children}
+					<Template>{children}</Template>
 					<Footer />
 				</body>
 			</ClerkProvider>

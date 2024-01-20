@@ -20,7 +20,7 @@ const getProducts = async (props: Props) => {
 		return <Unauthorized />;
 	}
 
-	const products = await fetchProducts();
+	const products = await fetchProducts(1, 20);
 
 	return (
 		<main className="grid grid-flow-row cols">

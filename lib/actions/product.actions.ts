@@ -65,6 +65,45 @@ export async function fetchProducts(
 }
 
 /**
+ * Fetch the Product by its ID
+ *
+ * @param {string} id - The ID of the Product
+ * @returns {Promise<(typeof Product)>} A Product object
+ */
+export async function fetchProductByID(id: string): Promise<typeof Product> {
+	try {
+		const product = await Product.findById(id);
+		return product;
+	} catch (error: any) {
+		throw new Error(`Failed to fetch product: ${error.message}`);
+	}
+}
+/**
+ * Fetch the Product by its ID
+ *
+ * @param {string} category - The ID of the Product
+ * @param {string} id - The ID of the Product
+ * @returns {Promise<(typeof Product[])>} An array of Product objects with same category.
+ */
+export async function fetchProductByCategory({
+	category,
+	id,
+}: {
+	category: string;
+	id: string;
+}): Promise<(typeof Product)[]> {
+	try {
+		const products = await Product.find({
+			category: category,
+			_id: { $ne: id }, // Exclude documents with the specified id
+		});
+		return products;
+	} catch (error: any) {
+		throw new Error(`Failed to fetch product: ${error.message}`);
+	}
+}
+
+/**
  * Deletes a product with the given productId.
  *
  * @param {string} productId - The id of the product to be deleted.

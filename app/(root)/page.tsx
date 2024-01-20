@@ -13,13 +13,21 @@ export default async function Home() {
 		return <ToUser />;
 	}
 	return (
-		<div>
-			<div className="bg-gradient-to-br from-[#1b1b1b] via-[#1b1b1b] to-[#2b2b2b] -mt-40 md:pt-40">
+		<div className="w-full bg-white">
+			<div className="bg-gradient-to-br from-[#1b1b1b] via-[#1b1b1b]  to-[#2b2b2b] -mt-40 md:pt-40 w-full sticky top-0 z-0">
 				<Banner />
 			</div>
-			<CardBanner />
-			<Exclusive />
-			<Movies />
+			<div className="sticky top-0 z-10 bg-white rounded-full">
+				<div className="bg-white z-10 lg:rounded-t-[40px] rounded-t-3xl">
+					<CardBanner />
+				</div>
+				<div className="bg-gradient-to-t from-[#282828] to-[#272727] h-[80vh] z-20 sticky py-10 bg-white">
+					<Exclusive />
+				</div>
+				<div className="z-30 bg-white">
+					<Movies />
+				</div>
+			</div>
 		</div>
 	);
 }
