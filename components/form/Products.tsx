@@ -19,6 +19,8 @@ const Products = (props: Props) => {
 	const [description, setDescription] = useState<string>("");
 	const [imagePreview, setImagePreview] = useState<string | any>(null);
 	const [isFeatureable, setIsFeatureable] = useState<boolean | any>(false);
+	console.log(Date.now());
+
 	const router = useRouter();
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -18,7 +18,9 @@ export default async function Home() {
 				<Banner />
 			</div>
 			<div className="sticky top-0 z-10 bg-white rounded-full">
-				<div className="bg-white z-10 lg:rounded-t-[40px] rounded-t-3xl">
+				<div
+					className="bg-white z-10 lg:rounded-t-[40px] rounded-t-3xl"
+					id="card-banner">
 					<CardBanner />
 				</div>
 				<div className="bg-gradient-to-t from-[#282828] to-[#272727] h-[80vh] z-20 sticky py-10 bg-white">

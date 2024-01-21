@@ -22,7 +22,7 @@ const FeaturedProducts = ({ products }: Props) => {
 	return (
 		<Carousel
 			orientation="horizontal"
-			className="w-[300px]  sm:w-[200px]  md:w-[400px]  lg:w-[800px] h-full
+			className="w-[300px]  md:w-[600px]  lg:w-[800px] h-full
 					xl:w-[1000px] my-10">
 			<CarouselContent>
 				{products.map((_: any, i: number) => (

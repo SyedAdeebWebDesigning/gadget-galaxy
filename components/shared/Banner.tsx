@@ -24,12 +24,22 @@ const Banner = (props: Props) => {
 				{
 					startValue: 0,
 					endValue: 100,
-					property: "translateX",
+					property: "translateY",
+				},
+				{
+					startValue: 0,
+					endValue: -1,
+					property: "rotate",
 				},
 				{
 					startValue: 1,
-					endValue: 0.8,
+					endValue: 1.2,
 					property: "scale",
+				},
+				{
+					startValue: 1,
+					endValue: 0.2,
+					property: "opacity",
 				},
 			],
 		},
@@ -42,8 +52,13 @@ const Banner = (props: Props) => {
 			properties: [
 				{
 					startValue: 0,
-					endValue: 150,
+					endValue: 10,
 					property: "translateY",
+				},
+				{
+					startValue: 1,
+					endValue: 0.9,
+					property: "scale",
 				},
 				{
 					startValue: 1,
@@ -55,7 +70,7 @@ const Banner = (props: Props) => {
 	];
 	const router = useRouter();
 	const plugin = React.useRef(
-		Autoplay({ delay: 4000, stopOnInteraction: false })
+		Autoplay({ delay: 8000, stopOnInteraction: false })
 	);
 	return (
 		<div className="text-gray-200 body-font w-full min-h-[94vh] lg:min-h-[100vh] overflow-hidden relative">

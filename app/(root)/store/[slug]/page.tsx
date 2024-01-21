@@ -1,24 +1,42 @@
 import DeleteButton from "@/components/admin/DeleteButton";
+import ProductReview from "@/components/form/ProductReview";
 import FeaturedProducts from "@/components/shared/FeaturedProducts";
+import Star from "@/components/shared/Star";
 import { Button } from "@/components/ui/button";
 import {
 	fetchProductByID,
-	fetchProducts,
 	fetchProductByCategory,
 } from "@/lib/actions/product.actions";
+import {
+	countDocument,
+	getReview,
+	getUserReview,
+	getAverageLikes,
+} from "@/lib/actions/review.actions";
+import { currentUser } from "@clerk/nextjs";
 import Image from "next/legacy/image";
 import React from "react";
 
 export default async function Page({ params }: { params: { slug: string } }) {
 	const id: string = params.slug;
+	const user: any = await currentUser();
+	if (!user) return null;
 	const product: any = await fetchProductByID(id);
 	const products = await fetchProductByCategory({
 		category: product.category,
 		id: id,
 	});
+	const reviews = getReview({
+		productId: id,
+		pageNumber: 1,
+		pageSize: 10,
+	});
+	const userReview = await getUserReview({ userId: user.id, productId: id });
+	const totalReviews = await countDocument(id);
+	const averageLikes: number | any = await getAverageLikes(id);
 	return (
 		<section className="text-gray-600 body-font my-10">
-			<div className=" mx-10 py-24">
+			<div className=" mx-10 mt-24 space-y-10 flex flex-col">
 				<div className="lg:w-4/5 mx-auto flex flex-col sm:flex-row h-full items-center">
 					<div className="relative lg:w-1/2 w-full object-contain h-60 lg:h-[500px] object-center rounded flex items-center ">
 						<Image
@@ -28,14 +46,17 @@ export default async function Page({ params }: { params: { slug: string } }) {
 							objectFit="contain"
 						/>
 					</div>
-					<div className="lg:w-1/2 w-full lg:mt-0 flex flex-col h-60 space-y-10">
+					<div className="lg:w-1/2 w-full lg:mt-0 flex flex-col space-y-10">
 						<div>
 							<h2 className="text-sm title-font text-gray-500 tracking-widest">
 								{product.category}
 							</h2>
-							<h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+							<h1 className="text-gray-900 text-3xl title-font font-medium mb-0">
 								{product.name}
 							</h1>
+							<div className="mb-6 flex justify-start">
+								<Star stars={averageLikes} reviews={totalReviews} />
+							</div>
 							<p className="leading-relaxed text-xl">{product.desc}</p>
 						</div>
 
@@ -51,7 +72,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 						</div>
 					</div>
 				</div>
-				<div className="mx-40 my-20 flex flex-col justify-center items-center">
+				<div className="mx-0 mt-20 flex flex-col justify-center items-center">
 					{products.length > 0 && (
 						<div>
 							<h3 className="text-center text-3xl">Related Products</h3>
@@ -59,6 +80,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 						</div>
 					)}
 				</div>
+				<ProductReview productId={id} userId={user.id} userReview={userReview}/>
 			</div>
 		</section>
 	);

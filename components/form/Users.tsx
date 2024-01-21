@@ -33,6 +33,10 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 	const [pinCode, setPinCode] = useState<string>("");
 	const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
+	if (isPresent) {
+		router.push("/");
+	}
+
 	const handleContinue = () => {
 		try {
 			addUser({

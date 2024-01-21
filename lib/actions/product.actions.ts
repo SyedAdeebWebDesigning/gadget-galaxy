@@ -1,17 +1,34 @@
 "use server";
-import prisma from "@/prisma/prisma";
 import { connectToDB } from "../mongoose";
 import Product from "../models/products.models";
 
 /**
  * Creates a new product in the database.
+ *
  * @param {object} product - The product object to be created.
  * @param {string} product.name - The name of the product.
  * @param {string} product.category - The category of the product.
  * @param {number} product.price - The price of the product.
  * @param {string} product.desc - The description of the product.
  * @param {string} product.imgUrl - The URL of the product image.
- * @throws {Error} If there is an error creating the product.
+ * @param {boolean} product.isFeatured - A flag indicating whether the product is featured.
+ * @throws {Error} - If there is an error creating the product.
+ *
+ * @example
+ * ?Example usage:
+ * try {
+ *   await addProduct({
+ *     name: 'Product Name',
+ *     category: 'Electronics',
+ *     price: 299.99,
+ *     desc: 'Description of the product.',
+ *     imgUrl: 'https://example.com/product.jpg',
+ *     isFeatured: true,
+ *   });
+ *   console.log('Product added successfully.');
+ * } catch (error) {
+ *   console.error('Error adding product:', error.message);
+ * }
  */
 export async function addProduct({
 	name,
@@ -27,7 +44,7 @@ export async function addProduct({
 	desc: string;
 	imgUrl: string;
 	isFeatured: boolean;
-}) {
+}): Promise<void> {
 	try {
 		await Product.create({
 			name,
@@ -47,8 +64,17 @@ export async function addProduct({
  *
  * @param {number} pageNumber - The page number to fetch.
  * @param {number} pageSize - The number of products to fetch per page.
- * @return {Promise<(typeof Product)[]>} An array of Product objects representing the products.
- * @throws {Error} If there is an error fetching the products.
+ * @return {Promise<typeof Product>[]} - A Promise resolving to an array of Product objects representing the products.
+ * @throws {Error} - If there is an error fetching the products.
+ *
+ * @example
+ * ?Example usage:
+ * try {
+ *   const products = await fetchProducts(1, 10);
+ *   console.log('Fetched products:', products);
+ * } catch (error) {
+ *   console.error('Error fetching products:', error.message);
+ * }
  */
 export async function fetchProducts(
 	pageNumber: number,
@@ -65,10 +91,20 @@ export async function fetchProducts(
 }
 
 /**
- * Fetch the Product by its ID
+ * Fetches a product from the database by its ID.
  *
- * @param {string} id - The ID of the Product
- * @returns {Promise<(typeof Product)>} A Product object
+ * @param {string} id - The ID of the product to fetch.
+ * @return {Promise<typeof Product>} - A Promise resolving to the fetched Product object.
+ * @throws {Error} - If there is an error fetching the product.
+ *
+ * @example
+ * ?Example usage:
+ * try {
+ *   const product = await fetchProductByID('product123');
+ *   console.log('Fetched product:', product);
+ * } catch (error) {
+ *   console.error('Error fetching product:', error.message);
+ * }
  */
 export async function fetchProductByID(id: string): Promise<typeof Product> {
 	try {
@@ -78,12 +114,27 @@ export async function fetchProductByID(id: string): Promise<typeof Product> {
 		throw new Error(`Failed to fetch product: ${error.message}`);
 	}
 }
+
 /**
- * Fetch the Product by its ID
+ * Fetches products from the database with the same category, excluding the one with the specified ID.
  *
- * @param {string} category - The ID of the Product
- * @param {string} id - The ID of the Product
- * @returns {Promise<(typeof Product[])>} An array of Product objects with same category.
+ * @param {object} params - The parameters for fetching products by category.
+ * @param {string} params.category - The category of the products to fetch.
+ * @param {string} params.id - The ID of the product to exclude from the results.
+ * @return {Promise<typeof Product>[]} - A Promise resolving to an array of Product objects.
+ * @throws {Error} - If there is an error fetching the products.
+ *
+ * @example
+ * ?Example usage:
+ * try {
+ *   const products = await fetchProductByCategory({
+ *     category: 'Electronics',
+ *     id: 'product123',
+ *   });
+ *   console.log('Fetched products by category:', products);
+ * } catch (error) {
+ *   console.error('Error fetching products by category:', error.message);
+ * }
  */
 export async function fetchProductByCategory({
 	category,
@@ -99,20 +150,30 @@ export async function fetchProductByCategory({
 		});
 		return products;
 	} catch (error: any) {
-		throw new Error(`Failed to fetch product: ${error.message}`);
+		throw new Error(`Failed to fetch products by category: ${error.message}`);
 	}
 }
 
 /**
  * Deletes a product with the given productId.
  *
- * @param {string} productId - The id of the product to be deleted.
- * @return {Promise<void>} - A promise that resolves when the product is successfully deleted.
+ * @param {string} productId - The ID of the product to be deleted.
+ * @return {Promise<void>} - A Promise that resolves when the product is successfully deleted.
+ * @throws {Error} - If there is an error deleting the product.
+ *
+ * @example
+ * ?Example usage:
+ * try {
+ *   await deleteProduct('product123');
+ *   console.log('Product deleted successfully.');
+ * } catch (error) {
+ *   console.error('Error deleting product:', error.message);
+ * }
  */
 export async function deleteProduct(productId: string): Promise<void> {
 	try {
 		await Product.deleteMany({
-			id: productId,
+			_id: productId,
 		});
 	} catch (error: any) {
 		throw new Error(`Failed to delete product: ${error.message}`);
@@ -120,11 +181,21 @@ export async function deleteProduct(productId: string): Promise<void> {
 }
 
 /**
- * Fetches the featured products.
+ * Fetches featured products from the database.
  *
- * @return {Promise<any>} - Returns a promise that resolves to an array of featured products.
+ * @return {Promise<typeof Product>[]} - A Promise resolving to an array of featured Product objects.
+ * @throws {Error} - If there is an error fetching featured products.
+ *
+ * @example
+ * ?Example usage:
+ * try {
+ *   const featuredProducts = await fetchFeaturedProducts();
+ *   console.log('Fetched featured products:', featuredProducts);
+ * } catch (error) {
+ *   console.error('Error fetching featured products:', error.message);
+ * }
  */
-export async function fetchFeaturedProducts(): Promise<any> {
+export async function fetchFeaturedProducts(): Promise<(typeof Product)[]> {
 	try {
 		const products = await Product.find({ isFeatured: true });
 		return products;
@@ -133,11 +204,26 @@ export async function fetchFeaturedProducts(): Promise<any> {
 	}
 }
 
-export async function countDocument() {
+/**
+ * Counts the number of documents in the products collection.
+ *
+ * @return {Promise<number>} - A Promise resolving to the count of documents in the products collection.
+ * @throws {Error} - If there is an error counting the documents.
+ *
+ * @example
+ * ?Example usage:
+ * try {
+ *   const count = await countDocument();
+ *   console.log('Number of documents:', count);
+ * } catch (error) {
+ *   console.error('Error counting documents:', error.message);
+ * }
+ */
+export async function countDocument(): Promise<number> {
 	try {
 		const count = await Product.countDocuments();
 		return count;
 	} catch (error: any) {
-		throw new Error(`Failed to fetch featured products: ${error.message}`);
+		throw new Error(`Failed to count documents: ${error.message}`);
 	}
 }
