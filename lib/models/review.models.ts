@@ -4,12 +4,9 @@ const reviewSchema = new mongoose.Schema(
 	{
 		userId: {
 			type: String,
-			required: true,
-			unique: true,
 		},
 		productId: {
 			type: String,
-			required: true,
 		},
 		like: {
 			type: Number,

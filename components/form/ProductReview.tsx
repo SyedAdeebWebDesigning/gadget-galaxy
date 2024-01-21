@@ -22,9 +22,9 @@ type Props = {
 };
 
 const ProductReview = ({ productId, userId, userReview }: Props) => {
-	const [like, setLike] = useState<number>(userReview.like || 1);
-	const [title, setTitle] = useState<string>("" || userReview.title);
-	const [review, setReview] = useState<string>("" || userReview.review);
+	const [like, setLike] = useState<number>(userReview?.like || 1);
+	const [title, setTitle] = useState<string>("" || userReview?.title);
+	const [review, setReview] = useState<string>("" || userReview?.review);
 	const router = useRouter();
 	const handleSubmit = () => {
 		try {

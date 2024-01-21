@@ -1,5 +1,6 @@
 "use server";
 import Review from "../models/review.models";
+import { connectToDB } from "../mongoose";
 
 /**
  * Adds a new review to the system.
@@ -41,10 +42,11 @@ export async function addReview({
 	title: string;
 	review: string;
 }): Promise<void> {
+	connectToDB();
 	try {
 		await Review.create({ userId, productId, like, title, review });
 	} catch (error: any) {
-		throw new Error("Error adding the review", error.message);
+		throw new Error(`Error adding the review ${error.message}`);
 	}
 }
 
