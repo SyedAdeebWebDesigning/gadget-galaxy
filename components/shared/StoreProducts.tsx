@@ -51,7 +51,7 @@ const StoreProducts = async ({ pageNo }: Props) => {
 										{product.name}
 									</h1>
 									<Link
-										href={`/store/${product._id}`}
+										href={`/store/${product._id}?page=1`}
 										className="title-font text-lg font-medium text-gray-500 mb-3">
 										<Button variant={"secondary"}>View Product</Button>
 									</Link>

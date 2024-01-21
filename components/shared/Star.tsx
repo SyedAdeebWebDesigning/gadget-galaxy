@@ -3,24 +3,30 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
 
-const Star = ({
-	stars,
-	reviews,
-}: {
-	stars: number;
-	reviews: number;
-}) => {
+const Stars = ({ stars, h, w }: { stars: number; h?: number; w?: number }) => {
 	const ratingStar = Array.from({ length: 5 }, (elem, index) => {
 		let number = index + 0.5;
 		debugger;
 		return (
-			<span key={index} className="text-sm">
+			<span key={index} className="text-sm space-y-2">
 				{stars >= index + 1 ? (
-					<FaStar className=" h-10 w-6 text-yellow-500" />
+					<FaStar
+						className={`${h !== undefined ? `h-[${h}]px` : "h-10 mt-3"} ${
+							w ? `w-[${w}]px` : "w-6 my-3"
+						} text-yellow-500 `}
+					/>
 				) : stars >= number ? (
-					<FaStarHalfAlt className=" h-10 w-6 text-yellow-500" />
+					<FaStarHalfAlt
+						className={`${h !== undefined ? `h-[${h}]px` : "h-10 mt-3"} ${
+							w ? `w-[${w}]px` : "w-6 my-3"
+						} text-yellow-500 `}
+					/>
 				) : (
-					<AiOutlineStar className=" h-10 w-7 text-yellow-500" />
+					<AiOutlineStar
+						className={`${h !== undefined ? `h-[${h}]px` : "h-10 mt-3"} ${
+							w ? `w-[${w}]px` : "w-6 my-3"
+						} text-yellow-500 `}
+					/>
 				)}
 			</span>
 		);
@@ -28,10 +34,7 @@ const Star = ({
 
 	return (
 		<Wrapper>
-			<div className="icon-style h-7 text-sm">
-				{ratingStar}
-				<p className="hidden sm:inline">({reviews} customer reviews)</p>
-			</div>
+			<div className="icon-style h-7 text-sm">{ratingStar}</div>
 		</Wrapper>
 	);
 };
@@ -53,4 +56,4 @@ const Wrapper = styled.section`
 	}
 `;
 
-export default Star;
+export default Stars;

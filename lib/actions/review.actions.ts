@@ -8,6 +8,9 @@ import { connectToDB } from "../mongoose";
  * @param {Object} params - The parameters for adding a review.
  * @param {string} params.userId - The ID of the user submitting the review.
  * @param {string} params.productId - The ID of the product being reviewed.
+ * @param {string} params.imgUrl - The image of the reviewer.
+ * @param {string} params.fullName - The full name of the reviewer.
+ * @param {string} params.productId - The ID of the product being reviewed.
  * @param {number} params.like - The rating or number of likes for the review.
  * @param {string} params.title - The title of the review.
  * @param {string} params.review - The detailed content of the review.
@@ -35,16 +38,28 @@ export async function addReview({
 	like,
 	title,
 	review,
+	imgUrl,
+	fullName,
 }: {
 	userId: string;
 	productId: string;
 	like: number;
 	title: string;
 	review: string;
+	imgUrl: string;
+	fullName: string;
 }): Promise<void> {
 	connectToDB();
 	try {
-		await Review.create({ userId, productId, like, title, review });
+		await Review.create({
+			userId,
+			productId,
+			like,
+			title,
+			review,
+			imgUrl,
+			fullName,
+		});
 	} catch (error: any) {
 		throw new Error(`Error adding the review ${error.message}`);
 	}
@@ -85,6 +100,7 @@ export async function getReview({
 	const skipAmount = (pageNumber - 1) * pageSize;
 	try {
 		const reviews = await Review.find({ productId: productId })
+			.sort({ updatedAt: "desc" })
 			.skip(skipAmount)
 			.limit(pageSize);
 		return reviews;
@@ -222,6 +238,8 @@ export async function getAverageLikes(
  * @param {string} params.id - The ID of the review to be edited.
  * @param {string} params.userId - The ID of the user submitting the review.
  * @param {string} params.productId - The ID of the product being reviewed.
+ * @param {string} params.imgUrl - The image of the reviewer.
+ * @param {string} params.fullName - The full name of the reviewer.
  * @param {number} params.like - The updated rating or number of likes for the review.
  * @param {string} params.title - The updated title of the review.
  * @param {string} params.review - The updated detailed content of the review.
@@ -253,6 +271,8 @@ export async function editReview({
 	like,
 	title,
 	review,
+	imgUrl,
+	fullName,
 }: {
 	id: string;
 	userId: string;
@@ -260,6 +280,8 @@ export async function editReview({
 	like: number;
 	title: string;
 	review: string;
+	imgUrl: string;
+	fullName: string;
 }): Promise<void> {
 	try {
 		// Find and update the existing review
@@ -271,6 +293,8 @@ export async function editReview({
 				like,
 				title,
 				review,
+				imgUrl,
+				fullName,
 			},
 			{ new: true } // Return the updated document
 		);

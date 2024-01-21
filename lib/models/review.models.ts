@@ -8,6 +8,12 @@ const reviewSchema = new mongoose.Schema(
 		productId: {
 			type: String,
 		},
+		fullName: {
+			type: String,
+		},
+		imgUrl: {
+			type: String,
+		},
 		like: {
 			type: Number,
 			default: 1,

@@ -29,7 +29,7 @@ const FeaturedProducts = ({ products }: Props) => {
 					<CarouselItem key={i} className="md:basis-1/2 lg:basis-1/3 ">
 						<Link href={`/store/${_._id}`} className="w-full" key={i}>
 							<div className="h-full relative rounded-lg overflow-hidden bg-gradient-to-t from-transparent to-gray-300 p-5">
-								<div className="relative w-60 h-60 flex justify-center items-center mx-auto aspect-square">
+								<div className="relative w-60 h-60 flex justify-center cursor-pointer items-center mx-auto aspect-square">
 									<Image
 										src={_.imgUrl}
 										alt=""

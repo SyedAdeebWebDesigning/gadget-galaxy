@@ -17,23 +17,37 @@ import { currentUser } from "@clerk/nextjs";
 import Image from "next/legacy/image";
 import React from "react";
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({
+	params,
+	searchParams,
+}: {
+	params: { slug: string };
+	searchParams: any;
+}) {
+	const pageNo = parseInt(searchParams.page);
 	const id: string = params.slug;
-	const user: any = await currentUser();
+	const user = await currentUser();
 	if (!user) return null;
 	const product: any = await fetchProductByID(id);
 	const products = await fetchProductByCategory({
 		category: product.category,
 		id: id,
 	});
-	const reviews = getReview({
-		productId: id,
-		pageNumber: 1,
-		pageSize: 10,
-	});
+	console.log(user.imageUrl);
+	const fullName = `${user?.firstName} ${user?.lastName}`;
+
 	const userReview = await getUserReview({ userId: user.id, productId: id });
 	const totalReviews = await countDocument(id);
 	const averageLikes: number | any = await getAverageLikes(id);
+	const count: number = await countDocument(id);
+	const pageSize = 3;
+	const totalPages = Math.ceil(count / pageSize);
+	const maxPages = Math.min(totalPages, 2);
+	const getReviews = await getReview({
+		productId: id,
+		pageNumber: pageNo,
+		pageSize: pageSize,
+	});
 	return (
 		<section className="text-gray-600 body-font my-10">
 			<div className=" mx-10 mt-24 space-y-10 flex flex-col">
@@ -54,8 +68,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
 							<h1 className="text-gray-900 text-3xl title-font font-medium mb-0">
 								{product.name}
 							</h1>
-							<div className="mb-6 flex justify-start">
-								<Star stars={averageLikes} reviews={totalReviews} />
+							<div className="mb-6 mt-3 flex flex-col justify-center items-start">
+								<div className="flex space-x-2 items-center">
+									<Star stars={averageLikes} />
+									<p className="mt-1">
+										{averageLikes ? averageLikes : "0.0"} - Rating{" "}
+									</p>
+								</div>
+								<p className="hidden sm:inline">({count} customer reviews)</p>
 							</div>
 							<p className="leading-relaxed text-xl">{product.desc}</p>
 						</div>
@@ -80,11 +100,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
 						</div>
 					)}
 				</div>
-				<ProductReview productId={id} userId={user.id} userReview={userReview}/>
+				<ProductReview
+					productId={id}
+					userId={user.id}
+					fullName={fullName}
+					imgUrl={user?.imageUrl}
+					userReview={userReview}
+					reviews={getReviews}
+					maxPages={maxPages}
+					pageNo={pageNo}
+					pageSize={pageSize}
+					totalPages={totalPages}
+				/>
 			</div>
 		</section>
 	);
-}
-function Autoplay(arg0: { delay: number }): any {
-	throw new Error("Function not implemented.");
 }
