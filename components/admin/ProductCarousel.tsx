@@ -56,7 +56,10 @@ const ProductCarousel = ({ products }: Props) => {
 											{_.name}
 										</h1>
 										<h1 className="title-font text-lg font-medium text-gray-500 mb-3">
-											₹{new Intl.NumberFormat("en-IN").format(_.price)}
+											{new Intl.NumberFormat("en-IN", {
+												style: "currency",
+												currency: "INR",
+											}).format(_.price)}
 										</h1>
 									</div>
 								</div>

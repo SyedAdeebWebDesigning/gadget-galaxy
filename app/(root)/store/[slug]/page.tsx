@@ -1,8 +1,9 @@
-import DeleteButton from "@/components/admin/DeleteButton";
+import AddToCart from "@/components/buttons/AddToCart";
 import ProductReview from "@/components/form/ProductReview";
 import FeaturedProducts from "@/components/shared/FeaturedProducts";
 import Star from "@/components/shared/Star";
 import { Button } from "@/components/ui/button";
+import { addProductsToCart } from "@/lib/actions/cart.actions";
 import {
 	fetchProductByID,
 	fetchProductByCategory,
@@ -16,6 +17,7 @@ import {
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/legacy/image";
 import React from "react";
+import { toast } from "react-toastify";
 
 export default async function Page({
 	params,
@@ -37,7 +39,6 @@ export default async function Page({
 	const fullName = `${user?.firstName} ${user?.lastName}`;
 
 	const userReview = await getUserReview({ userId: user.id, productId: id });
-	const totalReviews = await countDocument(id);
 	const averageLikes: number | any = await getAverageLikes(id);
 	const count: number = await countDocument(id);
 	const pageSize = 3;
@@ -48,6 +49,8 @@ export default async function Page({
 		pageNumber: pageNo,
 		pageSize: pageSize,
 	});
+	const userId = user?.id;
+
 	return (
 		<section className="text-gray-600 body-font my-10">
 			<div className=" mx-10 mt-24 space-y-10 flex flex-col">
@@ -80,15 +83,14 @@ export default async function Page({
 							<p className="leading-relaxed text-xl">{product.desc}</p>
 						</div>
 
-						<div className="flex items-center mt-full justify-end top-20 left-0 w-full">
+						<div className="flex flex-col sm:flex-row items-center mt-full justify-end top-20 left-0 w-full">
 							<span className="title-font font-medium text-2xl text-gray-900">
-								₹{new Intl.NumberFormat("en-IN").format(product.price)}
+								{new Intl.NumberFormat("en-IN", {
+									style: "currency",
+									currency: "INR",
+								}).format(product.price)}
 							</span>
-							<Button
-								className="flex ml-auto text-white border-0 py-2 px-6 focus:outline-none rounded"
-								variant={"default"}>
-								Add to cart
-							</Button>
+							<AddToCart userId={userId} product={product} />
 						</div>
 					</div>
 				</div>

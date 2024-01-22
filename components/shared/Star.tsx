@@ -6,7 +6,6 @@ import styled from "styled-components";
 const Stars = ({ stars, h, w }: { stars: number; h?: number; w?: number }) => {
 	const ratingStar = Array.from({ length: 5 }, (elem, index) => {
 		let number = index + 0.5;
-		debugger;
 		return (
 			<span key={index} className="text-sm space-y-2">
 				{stars >= index + 1 ? (

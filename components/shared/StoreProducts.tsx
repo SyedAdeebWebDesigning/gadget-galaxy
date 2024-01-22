@@ -57,7 +57,11 @@ const StoreProducts = async ({ pageNo }: Props) => {
 									</Link>
 								</div>
 								<h1 className="title-font xl:absolute text-2xl font-medium text-gray-500 mb-3 xl:opacity-0 group-hover:opacity-100 transition-all duration-200 ease-in-out top-0 xl:group-hover:top-20">
-									₹{new Intl.NumberFormat("en-IN").format(product.price)}
+									
+									{new Intl.NumberFormat("en-IN", {
+										style: "currency",
+										currency: "INR",
+									}).format(product.price)}
 								</h1>
 							</div>
 						</div>

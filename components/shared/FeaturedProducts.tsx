@@ -8,10 +8,7 @@ import {
 	CarouselPrevious,
 } from "../ui/carousel";
 import Image from "next/legacy/image";
-import { Badge } from "../ui/badge";
-import DeleteButton from "../admin/DeleteButton";
-import Autoplay from "embla-carousel-autoplay";
-import { fetchProducts } from "@/lib/actions/product.actions";
+
 import Link from "next/link";
 
 type Props = {

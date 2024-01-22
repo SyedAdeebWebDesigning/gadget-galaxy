@@ -10,7 +10,6 @@ import { connectToDB } from "../mongoose";
  * @param {string} params.productId - The ID of the product being reviewed.
  * @param {string} params.imgUrl - The image of the reviewer.
  * @param {string} params.fullName - The full name of the reviewer.
- * @param {string} params.productId - The ID of the product being reviewed.
  * @param {number} params.like - The rating or number of likes for the review.
  * @param {string} params.title - The title of the review.
  * @param {string} params.review - The detailed content of the review.
@@ -20,13 +19,17 @@ import { connectToDB } from "../mongoose";
  * @example
  * ?Example usage:
  * try {
- *   await addReview({
+ *   const reviewData = {
  *     userId: 'user123',
  *     productId: 'product456',
  *     like: 4,
  *     title: 'Great Product!',
- *     review: 'I really loved using this product. It exceeded my expectations.'
- *   });
+ *     review: 'I really loved using this product. It exceeded my expectations.',
+ *     imgUrl: 'https://example.com/user_avatar.jpg',
+ *     fullName: 'John Doe',
+ *   };
+ *
+ *   await addReview(reviewData);
  *   console.log('Review added successfully.');
  * } catch (error) {
  *   console.error('Error adding review:', error.message);
@@ -117,7 +120,7 @@ export async function getReview({
  * @returns {Promise<(typeof Review) | null>} - A promise that resolves to the Review object if found, or null if not found.
  *
  * @example
- * // Example usage:
+ * ?Example usage:
  * try {
  *   const review = await getUserReview({
  *     userId: 'user123',            ? Replace with an actual user ID
@@ -247,20 +250,27 @@ export async function getAverageLikes(
  * @throws {Error} - If there is an error during the review editing process.
  *
  * @example
- * ?Example usage:
+ * // Example usage:
  * try {
  *   const reviewId = 'yourReviewID'; // Replace with an actual review ID
+ *   const updatedReviewData = {
+ *     userId: 'user123',             // Replace with an actual user ID
+ *     productId: 'product456',       // Replace with an actual product ID
+ *     like: 5,                        // Updated rating or number of likes
+ *     title: 'Updated Title',         // Updated title of the review
+ *     review: 'Updated content...',   // Updated detailed content of the review
+ *     imgUrl: 'https://example.com/updated_avatar.jpg',  // Updated image URL
+ *     fullName: 'John Updated Doe',   // Updated full name of the reviewer
+ *   };
+ *
  *   await editReview({
  *     id: reviewId,
- *     userId: 'user123',            // Replace with an actual user ID
- *     productId: 'product456',      // Replace with an actual product ID
- *     like: 5,                       // Updated rating or number of likes
- *     title: 'Updated Title',        // Updated title of the review
- *     review: 'Updated content...',  // Updated detailed content of the review
+ *     ...updatedReviewData,
  *   });
+ *
  *   console.log('Review edited successfully.');
  * } catch (error) {
- *   ?Handle errors if any occur during the process
+ *   // Handle errors if any occur during the process
  *   console.error('Error editing review:', error.message);
  * }
  */
@@ -304,6 +314,6 @@ export async function editReview({
 			throw new Error(`Review not found with ID: ${id}`);
 		}
 	} catch (error: any) {
-		throw new Error("Error editing review: ", error.message);
+		throw new Error("Error editing review: " + error.message);
 	}
 }

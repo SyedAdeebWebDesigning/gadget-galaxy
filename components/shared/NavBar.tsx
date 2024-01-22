@@ -15,6 +15,7 @@ import {
 import { Button } from "../ui/button";
 import { fetchUserById } from "@/lib/actions/users.actions";
 import ToUser from "../redirects/toUser";
+import { fetchUserCart, fetchUserCartLength } from "@/lib/actions/cart.actions";
 
 const NavBar = async () => {
 	const navLinks = [
@@ -58,8 +59,11 @@ const NavBar = async () => {
 	const mongoUser: any = await fetchUserById(userId);
 	if (!mongoUser) <ToUser />;
 
+	const cart: any = await fetchUserCartLength(userId);
+	const cartLength = cart.products.length;
+
 	return (
-		<header className="text-gray-100 body-font bg-[#000000] text-shadow-black backdrop-blur-2xl sticky h-20 top-0 bottom-0 w-full z-50">
+		<header className="text-gray-100 body-font bg-[#000000]  backdrop-blur-2xl sticky h-20 top-0 bottom-0 w-full z-30">
 			<div className="px-10 mx-auto flex py-5 flex-row items-center justify-between">
 				<a href="/" className="hidden sm:flex object-cover h-10">
 					<Image
@@ -113,11 +117,25 @@ const NavBar = async () => {
 							</div>
 						</SignInButton>
 					</SignedOut>
-					<div
-						className=" bg-gradient-to-r from-indigo-500 to-purple-500 w-11 h-11
-                     rounded-full flex items-center justify-center cursor-pointer hover:animate-pulse">
+					<Link
+						href={!cartLength ? "/" : "/cart?page=1"}
+						className={`bg-gradient-to-r from-indigo-500 to-purple-500  px-1 h-11 ${
+							!cartLength ? "blur-0 w-11" : "backdrop-blur-sm w-[84px]"
+						}
+                     rounded-full flex items-center justify-start cursor-pointer hover:animate-pulse relative transition-all duration-200 ease-out`}>
 						<IoBagHandleSharp className="w-9 h-9 p-1 rounded-full bg-black text-clip" />
-					</div>
+
+						<div
+							className={`absolute bg-white border-4 rounded-full w-9 h-9 p-3 flex transition-all duration-200 items-center justify-center ${
+								!cartLength
+									? "top-[50%] bottom-[50%] -translate-y-[50%] right-[50%] left-[50%] -translate-x-[50%] bg-white invisible"
+									: "top-[50%] right-1 bottom-[50%] -translate-y-[50%] visible "
+							}`}>
+							<p className="text-black font-semibold">
+								{cartLength > 0 && cartLength}
+							</p>
+						</div>
+					</Link>
 					<div className="xl:hidden">
 						<DropdownMenu>
 							<DropdownMenuTrigger>
