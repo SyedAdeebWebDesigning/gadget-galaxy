@@ -21,12 +21,14 @@ const page = async ({
 	const cart: any = await fetchUserCart(userId, pageNo, pageSize);
 	const countNumber: number | any = await fetchUserCartLength(user?.id);
 	const count = countNumber.products.length;
+	console.log(Object(countNumber.products));
+
 	const totalPages = Math.ceil(parseInt(count) / pageSize);
 	const maxPages = Math.min(totalPages, 3);
 	const subTotal = await calculateCartSubtotal(user?.id);
 
 	return (
-		<main>
+		<div>
 			<h4 className="text-center text-3xl my-10">
 				Review your cart {count.length}
 			</h4>
@@ -38,7 +40,7 @@ const page = async ({
 				subTotal={subTotal}
 				userId={userId}
 			/>
-		</main>
+		</div>
 	);
 };
 

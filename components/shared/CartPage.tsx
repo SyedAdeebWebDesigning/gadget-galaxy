@@ -10,10 +10,9 @@ import {
 	PaginationEllipsis,
 	PaginationNext,
 } from "../ui/pagination";
-import { increaseProductQuantity } from "@/lib/actions/cart.actions";
-import { useRouter } from "next/navigation";
 import CartActions from "./CartActions";
 import Link from "next/link";
+import Checkout from "../buttons/Checkout";
 
 type Props = {
 	cart: any;
@@ -88,39 +87,8 @@ const CartPage = ({
 						</div>
 					))}
 				</div>
-				<div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-2/3">
-					<div className="mb-2 flex justify-between">
-						<p className="text-gray-700">Subtotal</p>
-						<p className="text-gray-700">
-							{new Intl.NumberFormat("en-IN", {
-								style: "currency",
-								currency: "INR",
-							}).format(subTotal)}
-						</p>
-					</div>
-					<div className="flex justify-between">
-						<p className="text-gray-700">Shipping</p>
-						<p className="text-gray-700">
-							{new Intl.NumberFormat("en-IN", {
-								style: "currency",
-								currency: "INR",
-							}).format(tax)}
-						</p>
-					</div>
-					<hr className="my-4" />
-					<div className="flex justify-between">
-						<p className="text-lg font-bold">Total</p>
-						<div className="">
-							<p className="mb-1 text-lg font-bold">
-								{new Intl.NumberFormat("en-IN", {
-									style: "currency",
-									currency: "INR",
-								}).format(subTotal + tax)}
-							</p>
-						</div>
-					</div>
-					<Button className="mt-6 w-full ">Check out</Button>
-				</div>
+
+				<Checkout cart={cart} subTotal={subTotal} />
 			</div>
 			<div className="relative">
 				<Pagination className="absolute left-[50%] -bottom-10 right-[50%] -translate-x-[50%]">

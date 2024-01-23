@@ -316,3 +316,82 @@ export async function removeProductQty({
 		throw new Error("Error removing product quantity: " + error.message);
 	}
 }
+
+/**
+ * Clears the user's cart by setting the products array to an empty array.
+ *
+ * @param {string} userId - The ID of the user whose cart needs to be cleared.
+ * @returns {Promise<void>} - A Promise that resolves when the cart is successfully cleared.
+ * @throws {Error} - If there is an error during the cart clearing process.
+ *
+ * @example
+ * ?Example usage:
+ * const userId = 'user123'; // Replace with the actual user ID
+ * try {
+ *   await clearCart(userId);
+ *   console.log('Cart cleared successfully.');
+ * } catch (error) {
+ *   console.error('Error clearing cart:', error.message);
+ * }
+ */
+export async function clearCart(userId: any): Promise<void> {
+	try {
+		// Find the user's cart
+		const userCart = await Cart.findOne({ userId });
+
+		if (!userCart) {
+			throw new Error("Cart not found for the specified user.");
+		}
+
+		// Clear the products array in the cart
+		userCart.products = [];
+
+		// Save the updated cart
+		await userCart.save();
+	} catch (error: any) {
+		throw new Error(`Error clearing cart: ${error.message}`);
+	}
+}
+
+/**
+ * Fetches the orders for a specific user.
+ *
+ * @param {string} userId - The ID of the user for whom to fetch orders.
+ * @returns {Promise<Array<{
+ *   productId: string;
+ *   name: string;
+ *   imgUrl: string;
+ *   price: number;
+ *   quantity: number;
+ * }>>} - A Promise that resolves with an array of ordered products, or an empty array if no orders are found.
+ * @throws {Error} - If there is an error during the fetch process.
+ *
+ * @example
+ * ?Example usage:
+ * try {
+ *   const orders = await fetchOrders('user123');
+ *   console.log('User orders:', orders);
+ * } catch (error) {
+ *   console.error('Error fetching orders:', error.message);
+ * }
+ */
+export async function fetchOrders(userId: string): Promise<
+	Array<{
+		productId: string;
+		name: string;
+		imgUrl: string;
+		price: number;
+		quantity: number;
+	}>
+> {
+	try {
+		const cart = await Cart.findOne({ userId: userId });
+		if (cart) {
+			return cart.products; // Assuming 'products' is the property in the cart object
+		} else {
+			return []; // Return an empty array if the cart is not found
+		}
+	} catch (error: any) {
+		throw new Error("Error fetching orders: " + error.message);
+	}
+}

@@ -27,7 +27,7 @@ export default async function RootLayout({
 					<ToastContainer
 						position="top-right"
 						stacked
-						autoClose={5000}
+						autoClose={2000}
 						hideProgressBar={false}
 						newestOnTop={false}
 						closeOnClick

@@ -15,7 +15,7 @@ import {
 import { Button } from "../ui/button";
 import { fetchUserById } from "@/lib/actions/users.actions";
 import ToUser from "../redirects/toUser";
-import { fetchUserCart, fetchUserCartLength } from "@/lib/actions/cart.actions";
+import { fetchUserCartLength } from "@/lib/actions/cart.actions";
 
 const NavBar = async () => {
 	const navLinks = [
@@ -60,6 +60,7 @@ const NavBar = async () => {
 	if (!mongoUser) <ToUser />;
 
 	const cart: any = await fetchUserCartLength(userId);
+
 	const cartLength = cart.products.length;
 
 	return (
