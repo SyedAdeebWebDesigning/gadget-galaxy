@@ -61,7 +61,7 @@ const NavBar = async () => {
 
 	const cart: any = await fetchUserCartLength(userId);
 
-	const cartLength = cart.products.length;
+	const cartLength = cart?.products?.length;
 
 	return (
 		<header className="text-gray-100 body-font bg-[#000000]  backdrop-blur-2xl sticky h-20 top-0 bottom-0 w-full z-30">

@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema({
 
 const orderSchema = new mongoose.Schema(
 	{
+		orderId: { type: String },
 		userId: { type: String },
 		email: { type: String },
 		name: { type: String },

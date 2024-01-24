@@ -2,9 +2,11 @@
 
 // Import necessary dependencies and modules
 import Order from "../models/orders.models"; // Assuming Order model is defined in a separate file
-import { clearCart, fetchOrders, fetchUserCartLength } from "./cart.actions"; // Import relevant cart actions
+import Product from "../models/products.models";
+import { clearCart, fetchOrders } from "./cart.actions"; // Import relevant cart actions
 
 export async function addOrders({
+	orderId,
 	userId,
 	email,
 	name,
@@ -15,6 +17,7 @@ export async function addOrders({
 	paymentStatus,
 	orderStatus,
 }: {
+	orderId: string;
 	userId: string;
 	email: string;
 	name: string;
@@ -26,9 +29,7 @@ export async function addOrders({
 	totalAmount: number;
 }): Promise<void> {
 	try {
-		// Fetch products from the user's cart
 		const cartProducts: any = await fetchOrders(userId);
-		console.log("Cart", cartProducts);
 
 		const cart = cartProducts.map((product: any) => ({
 			productId: product.productId,
@@ -39,6 +40,7 @@ export async function addOrders({
 		}));
 
 		await Order.create({
+			orderId,
 			userId,
 			email,
 			cart,
@@ -54,8 +56,17 @@ export async function addOrders({
 		// Save the order to the database
 
 		// Clear the user's cart after placing the order
-		// await clearCart(userId);
+		await clearCart(userId);
 	} catch (error: any) {
 		throw new Error(`Error adding the order: ${error.message}`);
+	}
+}
+
+export async function fetchOrderById(orderId: string): Promise<any[]> {
+	try {
+		const orders: any = await Order.findOne({ orderId: orderId });
+		return orders;
+	} catch (error: any) {
+		throw new Error(`Error fetching orders by IDs: ${error.message}`);
 	}
 }

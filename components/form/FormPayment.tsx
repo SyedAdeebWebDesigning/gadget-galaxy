@@ -13,17 +13,17 @@ import { addOrders } from "@/lib/actions/orders.actions";
 import { fetchUserCartLength } from "@/lib/actions/cart.actions";
 import { useRouter } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
-type Props = { userById: any; subTotal: any };
 
-const FormPayment = ({ userById, subTotal }: Props) => {
+type Props = { userById: any; subTotal: any; cartId: { _id: string } };
+
+const FormPayment = ({ userById, subTotal, cartId }: Props) => {
 	const [cvc, setCvc] = useState<string>("");
-	const [expiration, setExpiration] = useState("");
+	const [expiration, setExpiration] = useState<string>("");
 	const cvcValue = parseInt(cvc.slice(0, 3));
-	const expirationValue = expiration.slice(0, 4);
+	const expirationValue = parseInt(expiration?.slice(0, 4));
 	const [cardNumber, setCardNumber] = useState("");
 	const [cardNetwork, setCardNetwork] = useState("Unknown");
 	const [name, setName] = useState("" || userById.fullName);
-	const countNumber: number | any = fetchUserCartLength(userById?.id);
 	const router = useRouter();
 	const handleCardNumberChange = (event: any) => {
 		const inputCardNumber = event.target.value.replace(/\D/g, "").slice(0, 16); // Remove non-digit characters
@@ -50,6 +50,7 @@ const FormPayment = ({ userById, subTotal }: Props) => {
 			toast.error("Please fill the required fields");
 		} else {
 			const orderInfo = {
+				orderId: `${userById?.userId}${cartId._id}`,
 				userId: userById?.userId,
 				email: userById?.email,
 				name: name,
@@ -61,13 +62,31 @@ const FormPayment = ({ userById, subTotal }: Props) => {
 				orderStatus: "processing",
 			};
 			addOrders(orderInfo);
-			router.push("/order");
+			router.push(`/order/${userById?.userId}${cartId._id}}`);
 		}
+	};
+	const handlePayOnDevilry = (e: any) => {
+		e.preventDefault();
+
+		const orderInfo = {
+			orderId: `${userById?.userId}${cartId._id}`,
+			userId: userById?.userId,
+			email: userById?.email,
+			name: name,
+			address: userById?.address,
+			city: userById?.city,
+			state: userById?.state,
+			totalAmount: subTotal,
+			paymentStatus: "pending",
+			orderStatus: "processing",
+		};
+		addOrders(orderInfo);
+		router.push(`/order/${userById?.userId}${cartId._id}}`);
 	};
 	return (
 		<form className="space-y-5 p-5 rounded-xl">
 			<div className="grid w-full items-center gap-1.5">
-				<Label>Email address</Label>
+				<Label>Email address {`${userById?.userId}${cartId._id}`}</Label>
 				<Input
 					className="border border-slate-300 focus:border-none"
 					type="email"
@@ -213,7 +232,10 @@ const FormPayment = ({ userById, subTotal }: Props) => {
 					Confirm Order
 				</Button>
 				<h3 className="text-center my-1">or</h3>
-				<Button variant={"link"} className="w-full" onClick={handleSubmit}>
+				<Button
+					variant={"link"}
+					className="w-full"
+					onClick={handlePayOnDevilry}>
 					Pay on Delivery
 				</Button>
 			</div>

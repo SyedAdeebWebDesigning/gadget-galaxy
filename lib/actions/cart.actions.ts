@@ -337,17 +337,7 @@ export async function removeProductQty({
 export async function clearCart(userId: any): Promise<void> {
 	try {
 		// Find the user's cart
-		const userCart = await Cart.findOne({ userId });
-
-		if (!userCart) {
-			throw new Error("Cart not found for the specified user.");
-		}
-
-		// Clear the products array in the cart
-		userCart.products = [];
-
-		// Save the updated cart
-		await userCart.save();
+		await Cart.findOneAndDelete({ userId });
 	} catch (error: any) {
 		throw new Error(`Error clearing cart: ${error.message}`);
 	}
@@ -391,6 +381,16 @@ export async function fetchOrders(userId: string): Promise<
 		} else {
 			return []; // Return an empty array if the cart is not found
 		}
+	} catch (error: any) {
+		throw new Error("Error fetching orders: " + error.message);
+	}
+}
+
+export async function fetchCartId(userId: string): Promise<Array<null>> {
+	try {
+		const cart = await Cart.findOne({ userId: userId });
+
+		return cart; // Assuming 'products' is the property in the cart object
 	} catch (error: any) {
 		throw new Error("Error fetching orders: " + error.message);
 	}

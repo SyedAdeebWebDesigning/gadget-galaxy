@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/pagination";
 import {
 	calculateCartSubtotal,
-	fetchOrders,
+	fetchCartId,
 	fetchUserCart,
 	fetchUserCartLength,
 } from "@/lib/actions/cart.actions";
@@ -30,14 +30,15 @@ export default async function PreviewPage({
 	const pageNo = parseInt(searchParams.page);
 	const pageSize = 4;
 	const cart: any = await fetchUserCart(userId, pageNo, pageSize);
+	if (!cart) return null;
 	const countNumber: number | any = await fetchUserCartLength(user?.id);
 	const count = countNumber.products.length;
 	const totalPages = Math.ceil(parseInt(count) / pageSize);
 	const maxPages = Math.min(totalPages, 3);
 	const subTotal = await calculateCartSubtotal(user?.id);
 	const userById: any = await fetchUserById(userId);
-	const fullCart: any = await fetchOrders(user?.id);
-	console.log("Hi", fullCart);
+	const fullCart: any = await fetchCartId(user?.id);
+	const cartId: any = JSON.parse(JSON.stringify(fullCart));
 
 	return (
 		<section className="flex w-full header-none md:w-[700px] lg:w-[800px] xl:w-[1200px] justify-center items-center flex-col lg:flex-row space-x-0 space-y-3 lg:space-y-0 lg:space-x-3 mx-auto">
@@ -142,7 +143,7 @@ export default async function PreviewPage({
 				</div>
 			</div>
 			<div className="bg-slate-100 h-full w-full px-10 py-20 space-y-10">
-				<FormPayment userById={userById} subTotal={subTotal} />
+				<FormPayment userById={userById} subTotal={subTotal} cartId={cartId} />
 			</div>
 		</section>
 	);
