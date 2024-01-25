@@ -13,10 +13,17 @@ import { addOrders } from "@/lib/actions/orders.actions";
 import { fetchUserCartLength } from "@/lib/actions/cart.actions";
 import { useRouter } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { MdDone } from "react-icons/md";
+import { motion } from "framer-motion";
 
 type Props = { userById: any; subTotal: any; cartId: { _id: string } };
 
 const FormPayment = ({ userById, subTotal, cartId }: Props) => {
+	const [isLoading, setIsLoading] = useState<"default" | "loading" | "loaded">(
+		"default"
+	);
+
 	const [cvc, setCvc] = useState<string>("");
 	const [expiration, setExpiration] = useState<string>("");
 	const cvcValue = parseInt(cvc.slice(0, 3));
@@ -49,6 +56,8 @@ const FormPayment = ({ userById, subTotal, cartId }: Props) => {
 		if (!cardNumber || !cvc || !expiration) {
 			toast.error("Please fill the required fields");
 		} else {
+			setIsLoading("loading");
+
 			const orderInfo = {
 				orderId: `${userById?.userId}${cartId._id}`,
 				userId: userById?.userId,
@@ -59,10 +68,17 @@ const FormPayment = ({ userById, subTotal, cartId }: Props) => {
 				state: userById?.state,
 				totalAmount: subTotal,
 				paymentStatus: "completed",
-				orderStatus: "processing",
+				orderStatus: "placed",
 			};
-			addOrders(orderInfo);
-			router.push(`/order/${userById?.userId}${cartId._id}}`);
+			setTimeout(() => {
+				addOrders(orderInfo);
+			}, 1500);
+			setTimeout(() => {
+				setIsLoading("loaded");
+			}, 2000);
+			setTimeout(() => {
+				router.push(`/order/${userById?.userId}${cartId._id}}`);
+			}, 2500);
 		}
 	};
 	const handlePayOnDevilry = (e: any) => {
@@ -78,15 +94,15 @@ const FormPayment = ({ userById, subTotal, cartId }: Props) => {
 			state: userById?.state,
 			totalAmount: subTotal,
 			paymentStatus: "pending",
-			orderStatus: "processing",
+			orderStatus: "placed",
 		};
 		addOrders(orderInfo);
 		router.push(`/order/${userById?.userId}${cartId._id}}`);
 	};
 	return (
-		<form className="space-y-5 p-5 rounded-xl">
+		<form className="space-y-5 p-5 rounded-xl transition-all duration-200">
 			<div className="grid w-full items-center gap-1.5">
-				<Label>Email address {`${userById?.userId}${cartId._id}`}</Label>
+				<Label>Email address</Label>
 				<Input
 					className="border border-slate-300 focus:border-none"
 					type="email"
@@ -116,11 +132,16 @@ const FormPayment = ({ userById, subTotal, cartId }: Props) => {
 						required
 						onChange={handleCardNumberChange}
 					/>
-					<div className="absolute right-2 top-[50%] -translate-y-[50%]">
+					<div className="absolute right-2 top-[50%] -translate-y-[50%] transition-all duration-200">
 						{cardNetwork === "Visa" ? (
-							<RiVisaLine className="w-6 h-6 text-[#1434CB]" />
+							<div>
+								<RiVisaLine className="w-6 h-6 text-[#1434CB]" />
+							</div>
 						) : cardNetwork === "MasterCard" ? (
-							<div className="flex items-center">
+							<motion.div
+								initial={{ opacity: 0 }}
+								whileInView={{ opacity: 1 }}
+								className="flex items-center">
 								<Image
 									className="w-6 h-6 flex items-center mt-1"
 									width={24}
@@ -129,9 +150,13 @@ const FormPayment = ({ userById, subTotal, cartId }: Props) => {
 									alt="mastercard"
 									objectFit="contain"
 								/>
-							</div>
+							</motion.div>
 						) : (
-							<div className="flex space-x-3 items-center transition-none duration-200 ease-linear">
+							<motion.div
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ duration: 0.4 }}
+								className="flex space-x-3 items-center transition-none duration-200 ease-linear">
 								<RiVisaLine className="w-6 h-6 text-[#1434CB] mr-2" />
 								<Image
 									className="w-6 h-6 flex items-center mt-1 mr-2"
@@ -142,7 +167,7 @@ const FormPayment = ({ userById, subTotal, cartId }: Props) => {
 									objectFit="contain"
 								/>
 								<FaCreditCard className="w-5 h-5 text-slate-500" />
-							</div>
+							</motion.div>
 						)}
 					</div>
 				</div>
@@ -227,9 +252,50 @@ const FormPayment = ({ userById, subTotal, cartId }: Props) => {
 				</div>
 				<Button
 					variant={"secondary"}
-					className="w-full mt-10"
+					className={`w-full relative mt-10 transition-all duration-300 ${
+						isLoading === "loading"
+							? "bg-gray-600 transition-all duration-300"
+							: isLoading === "loaded"
+							? "bg-green-600 hover:bg-green-700 transition-all duration-300"
+							: " transition-all duration-300"
+					}`}
 					onClick={handleSubmit}>
-					Confirm Order
+					{isLoading === "loading" ? (
+						<motion.p
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ duration: 0.3 }}
+							className="flex items-center justify-center space-x-2 transition-all duration-300">
+							<span className="animate-spin">
+								<AiOutlineLoading3Quarters className="w-6 h-6" />
+							</span>
+							<span className="text-xl">Loading</span>
+						</motion.p>
+					) : isLoading === "loaded" ? (
+						<motion.p
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ duration: 0.4 }}
+							className="flex items-center justify-center space-x-2 transition-all duration-300">
+							<span className="">
+								<MdDone className="w-6 h-6" />
+							</span>
+							<span className="text-xl">Order confirmed</span>
+						</motion.p>
+					) : (
+						<p className="transition-all duration-300">Confirm Order</p>
+					)}
+					<motion.p
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ duration: 0.3 }}
+						className={`absolute top-[50%] left-2 -translate-y-[50%] ${
+							isLoading === "loading"
+								? "bg-gray-600"
+								: isLoading === "loaded"
+								? "bg-green-400"
+								: "default"
+						}`}></motion.p>
 				</Button>
 				<h3 className="text-center my-1">or</h3>
 				<Button
@@ -244,12 +310,3 @@ const FormPayment = ({ userById, subTotal, cartId }: Props) => {
 };
 
 export default FormPayment;
-
-export const getServerSideProps = async () => {
-	const user: any = await currentUser();
-	const data = fetchUserCartLength(user?.id);
-
-	return {
-		props: { data },
-	};
-};

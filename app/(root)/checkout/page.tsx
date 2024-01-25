@@ -1,4 +1,5 @@
 import FormPayment from "@/components/form/FormPayment";
+import ToStore from "@/components/redirects/toStore";
 import { Button } from "@/components/ui/button";
 import {
 	Pagination,
@@ -30,7 +31,7 @@ export default async function PreviewPage({
 	const pageNo = parseInt(searchParams.page);
 	const pageSize = 4;
 	const cart: any = await fetchUserCart(userId, pageNo, pageSize);
-	if (!cart) return null;
+	if (!cart) return <ToStore />;
 	const countNumber: number | any = await fetchUserCartLength(user?.id);
 	const count = countNumber.products.length;
 	const totalPages = Math.ceil(parseInt(count) / pageSize);
@@ -39,7 +40,7 @@ export default async function PreviewPage({
 	const userById: any = await fetchUserById(userId);
 	const fullCart: any = await fetchCartId(user?.id);
 	const cartId: any = JSON.parse(JSON.stringify(fullCart));
-
+	if (!cartId) return null;
 	return (
 		<section className="flex w-full header-none md:w-[700px] lg:w-[800px] xl:w-[1200px] justify-center items-center flex-col lg:flex-row space-x-0 space-y-3 lg:space-y-0 lg:space-x-3 mx-auto">
 			<div className="bg-slate-200/80 rounded-xl h-full w-full px-10 pb-20 pt-4 space-y-10">

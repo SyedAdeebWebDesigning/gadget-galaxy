@@ -82,7 +82,6 @@ export async function addProductsToCart(
  * @param {number} pageNumber - The page number of the cart to retrieve.
  * @param {number} pageSize - The number of items per page in the cart.
  * @returns {Promise<(typeof Cart)[]>} - A Promise that resolves to a paginated array of cart items.
- * @throws {Error} - If there is an error during the cart fetching process.
  *
  * @example
  * ?Example usage:
@@ -96,14 +95,14 @@ export async function addProductsToCart(
  *   console.log('Paginated Cart:', paginatedCart);
  * } catch (error) {
  *   ?Handle errors if any occur during the process
- *   console.error('Error fetching user cart:', error.message);
+ *   console.log('Error fetching user cart:', error.message);
  * }
  */
 export async function fetchUserCart(
 	userId: string,
 	pageNumber: number,
 	pageSize: number
-): Promise<(typeof Cart)[]> {
+): Promise<(typeof Cart)[] | undefined> {
 	try {
 		const cart = await Cart.findOne({ userId: userId });
 
@@ -121,7 +120,7 @@ export async function fetchUserCart(
 		const finalCart: any = { paginatedCart, cart };
 		return finalCart;
 	} catch (error: any) {
-		throw new Error("Error fetching the cart: " + error.message);
+		console.log("Error fetching the cart: " + error.message);
 	}
 }
 
