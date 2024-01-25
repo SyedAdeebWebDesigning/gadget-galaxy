@@ -8,7 +8,6 @@ import {
 	CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Plx from "react-plx";
 
@@ -23,22 +22,22 @@ const Banner = (props: Props) => {
 			properties: [
 				{
 					startValue: 0,
-					endValue: 100,
+					endValue: -40,
 					property: "translateY",
 				},
 				{
 					startValue: 0,
-					endValue: -1,
+					endValue: 0,
 					property: "rotate",
 				},
 				{
 					startValue: 1,
-					endValue: 1.2,
+					endValue: 1,
 					property: "scale",
 				},
 				{
 					startValue: 1,
-					endValue: 0.2,
+					endValue: 1,
 					property: "opacity",
 				},
 			],
@@ -52,17 +51,17 @@ const Banner = (props: Props) => {
 			properties: [
 				{
 					startValue: 0,
-					endValue: 10,
+					endValue: -30,
 					property: "translateY",
 				},
 				{
 					startValue: 1,
-					endValue: 0.9,
+					endValue: 1,
 					property: "scale",
 				},
 				{
 					startValue: 1,
-					endValue: 0.33,
+					endValue: 13,
 					property: "opacity",
 				},
 			],

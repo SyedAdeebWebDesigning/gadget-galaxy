@@ -44,6 +44,10 @@ const NavBar = async () => {
 			link: "/headphones",
 		},
 		{
+			title: "Order",
+			link: "/order",
+		},
+		{
 			title: "Adeflix",
 			link: "/#adeflix",
 		},
@@ -86,7 +90,7 @@ const NavBar = async () => {
 						priority
 					/>
 				</a>
-				<nav className="-ml-10 hidden xl:flex">
+				<nav className="-ml-10 hidden 2xl:flex">
 					{navLinks.map((navLink) => (
 						<a key={navLink.title} href={navLink.link} className="navLinks">
 							{navLink.title}
@@ -119,7 +123,7 @@ const NavBar = async () => {
 						</SignInButton>
 					</SignedOut>
 					<Link
-						href={!cartLength ? "/" : "/cart?page=1"}
+						href={!cartLength ? "/store" : "/cart?page=1"}
 						className={`bg-gradient-to-r from-indigo-500 to-purple-500  px-1 h-11 ${
 							!cartLength ? "blur-0 w-11" : "backdrop-blur-sm w-[84px]"
 						}
@@ -137,7 +141,7 @@ const NavBar = async () => {
 							</p>
 						</div>
 					</Link>
-					<div className="xl:hidden">
+					<div className="2xl:hidden">
 						<DropdownMenu>
 							<DropdownMenuTrigger>
 								<RiMenu3Fill className="h-8 w-8 mt-2" />

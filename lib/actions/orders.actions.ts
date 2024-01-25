@@ -70,3 +70,12 @@ export async function fetchOrderById(orderId: string): Promise<any[]> {
 		throw new Error(`Error fetching orders by IDs: ${error.message}`);
 	}
 }
+
+export async function fetchOrdersByUserId(userId: string) {
+	try {
+		const orders = await Order.find({ userId: userId });
+		return orders;
+	} catch (error: any) {
+		console.error("Error:", error.message);
+	}
+}

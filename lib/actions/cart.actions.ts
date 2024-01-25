@@ -364,6 +364,36 @@ export async function clearCart(userId: any): Promise<void> {
  *   console.error('Error fetching orders:', error.message);
  * }
  */
+
+/**
+ * Fetches the orders from the user's cart based on the provided userId.
+ *
+ * @param {string} userId - The unique identifier of the user.
+ * @returns {Promise<Array<{
+ *   productId: string;
+ *   name: string;
+ *   imgUrl: string;
+ *   price: number;
+ *   quantity: number;
+ * }>>} - A promise that resolves to an array of order items with specific properties.
+ * @throws {Error} - If there is an error during the fetching process.
+ * @example
+ * try {
+ *   const userId = "user_123";
+ *   const userOrders = await fetchOrders(userId);
+ *
+ *   if (userOrders.length > 0) {
+ *     console.log("User orders:", userOrders);
+ *     ?Process the user's orders, e.g., display them on a webpage
+ *   } else {
+ *     console.log("No orders found for the user.");
+ *     ?Handle the case where the user has no orders
+ *   }
+ * } catch (error) {
+ *   console.error("Error:", error.message);
+ *   ?Handle the error, e.g., display an error message to the user
+ * }
+ */
 export async function fetchOrders(userId: string): Promise<
 	Array<{
 		productId: string;
@@ -385,6 +415,32 @@ export async function fetchOrders(userId: string): Promise<
 	}
 }
 
+/**
+ * Fetches the cart ID for a given user ID.
+ *
+ * @param {string} userId - The unique identifier for the user.
+ * @returns {Promise<Array<null>>} - A promise that resolves to an array containing the cart object.
+ *   Returns an empty array if no cart is found.
+ *
+ * @throws {Error} - Throws an error if there's an issue fetching the cart ID.
+ *
+ * @example
+ * try {
+ *   const userId = "user_123";
+ *   const userCart = await fetchCartId(userId);
+ *
+ *   if (userCart.length > 0) {
+ *     console.log("User cart ID:", userCart[0]._id);
+ *     ?Process the user's cart ID, e.g., use it to retrieve the cart details
+ *   } else {
+ *     console.log("No cart found for the user.");
+ *     ?Handle the case where the user has no cart
+ *   }
+ * } catch (error) {
+ *   console.error("Error:", error.message);
+ *   ?Handle the error, e.g., display an error message to the user
+ * }
+ */
 export async function fetchCartId(userId: string): Promise<Array<null>> {
 	try {
 		const cart = await Cart.findOne({ userId: userId });
