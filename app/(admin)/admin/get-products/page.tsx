@@ -10,7 +10,7 @@ import OrderChart from "@/components/charts/orders";
 
 type Props = {};
 
-const Dashboard = async (props: Props) => {
+const getProducts = async (props: Props) => {
 	const user: any = await currentUser();
 	if (!user) return null;
 	const userId: string | any = `${user?.id}`;
@@ -26,15 +26,16 @@ const Dashboard = async (props: Props) => {
 
 	return (
 		<main className="grid grid-flow-row cols">
-			<SideBar fullName={fullName} userImg={userImg} link="/admin/dashboard" />
+			<SideBar
+				fullName={fullName}
+				userImg={userImg}
+				link="/admin/get-products"
+			/>
 			<section className="text-gray-600 body-font">
 				<div className="container px-5 py-24 mx-auto">
-					<h3 className="text-center text-4xl mb-10">Dashboard</h3>
-					<div className="flex flex-col bg-gradient-to-tr from-red-100 to-green-100 space-y-2 rounded-2xl hover:from-green-100 hover:to-red-100 justify-center w-full overflow-x-hidden transition-all duration-200 ease-in-out hover:scale-95">
-						<OrderChart />
-					</div>
-					<div className="flex flex-col bg-gradient-to-tr mt-2 from-pink-200 to-teal-100 space-y-2 rounded-2xl hover:from-teal-200 hover:to-pink-100 justify-center w-full overflow-x-hidden transition-all duration-200 ease-in-out hover:scale-95">
-						<Chart />
+					<h3 className="text-center text-4xl mb-10">All Products</h3>
+					<div className="flex flex-wrap -m-4 items-center justify-center">
+						<ProductCarousel products={products} />
 					</div>
 				</div>
 			</section>
@@ -42,4 +43,4 @@ const Dashboard = async (props: Props) => {
 	);
 };
 
-export default Dashboard;
+export default getProducts;

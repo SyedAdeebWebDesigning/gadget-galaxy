@@ -33,17 +33,15 @@ const OrderPage = async (props: Props) => {
 	const orders: orderProps | any = await fetchOrdersByUserId(user?.id);
 	return (
 		<main>
-			<h3 className="text-center text-3xl mt-10">Orders page</h3>
-			<section className="text-gray-600 body-font m">
+			<h3 className="text-center text-3xl mt-10">Your Orders</h3>
+			<section className="text-gray-600 body-font">
 				<div className="container px-5 py-24 mx-auto">
-					<div className="flex flex-wrap -m-4 ">
+					<div className="grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 w-full">
 						{orders.map((order: orderProps) => (
-							<div
-								className="p-4 md:w-1/3 bg-slate-200 rounded-xl"
-								key={order?._id}>
-								<div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-									<div className="lg:h-48 md:h-36 w-full object-cover object-center relative">
-										<Link href={`/order/${order.orderId}%7D`}>
+							<div className=" bg-slate-200 rounded-xl m-2" key={order?._id}>
+								<div className="h-full border-2 border-gray-200 p-4 border-opacity-60 rounded-lg overflow-hidden">
+									<div className="lg:h-48 md:h-36 w-full h-36 object-cover object-center relative">
+										<Link href={`/order/${order.orderId}%7D`} className="m-2">
 											<Image
 												src={order?.cart[0].imgUrl}
 												alt=""
@@ -64,29 +62,31 @@ const OrderPage = async (props: Props) => {
 										<p className="leading-relaxed">{order.address}</p>
 										<p className="leading-relaxed">{order.city}</p>
 										<p className="leading-relaxed">{order.state}</p>
-										<div className="flex items-center flex-wrap">
-											<Link
-												className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0"
-												href={`/order/${order.orderId}%7D`}>
-												View Product
-												<svg
-													className="w-4 h-4 ml-2"
-													viewBox="0 0 24 24"
-													stroke="currentColor"
-													stroke-width="2"
-													fill="none"
-													stroke-linecap="round"
-													stroke-linejoin="round">
-													<path d="M5 12h14"></path>
-													<path d="M12 5l7 7-7 7"></path>
-												</svg>
-											</Link>
-											<span className="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
-												{new Intl.NumberFormat("en-IN", {
-													style: "currency",
-													currency: "INR",
-												}).format(order.totalAmount)}
-											</span>
+										<div className="flex items-center text-sm line-clamp-1">
+											<div className="text-gray-600 font-semibold items-start md:mb-2 lg:mb-0 flex flex-col text-left justify-between w-full">
+												Order Status:{" "}
+												<p className="text-gray-600">Payment Status</p>
+											</div>
+											<div
+												className={`${
+													order.orderStatus === "processing"
+														? "text-indigo-300"
+														: order.orderStatus === "shipped"
+														? "text-orange-500"
+														: order.orderStatus === "delivered"
+														? "text-teal-600"
+														: ""
+												} items-start md:mb-2 lg:mb-0 flex flex-col text-left`}>
+												{order.orderStatus}{" "}
+												<p
+													className={`${
+														order.paymentStatus !== "completed"
+															? "text-red-500"
+															: "text-teal-600"
+													} font-semibold`}>
+													{order.paymentStatus}
+												</p>
+											</div>
 										</div>
 									</div>
 								</div>

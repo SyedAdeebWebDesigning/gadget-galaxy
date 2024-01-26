@@ -30,7 +30,7 @@ const orderSchema = new mongoose.Schema(
 		orderStatus: {
 			type: String,
 			enum: ["placed", "processing", "shipped", "delivered"],
-			default: "processing",
+			default: "placed",
 		},
 	},
 	{ timestamps: true }

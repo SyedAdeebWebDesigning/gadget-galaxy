@@ -16,6 +16,7 @@ import { currentUser } from "@clerk/nextjs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
 import { motion } from "framer-motion";
+import { sendEmail } from "@/lib/sendEmail";
 
 type Props = { userById: any; subTotal: any; cartId: { _id: string } };
 
@@ -97,14 +98,21 @@ const FormPayment = ({ userById, subTotal, cartId }: Props) => {
 			orderStatus: "placed",
 		};
 		addOrders(orderInfo);
-		router.push(`/order/${userById?.userId}${cartId._id}}`);
+		setTimeout(() => {
+			router.push(`/order/${userById?.userId}${cartId._id}}`);
+		}, 1000);
 	};
 	return (
-		<form className="space-y-5 p-5 rounded-xl transition-all duration-200">
+		<form
+			className="space-y-5 p-5 rounded-xl transition-all duration-200"
+			action={async (formData) => {
+				await sendEmail(formData);
+			}}>
 			<div className="grid w-full items-center gap-1.5">
 				<Label>Email address</Label>
 				<Input
 					className="border border-slate-300 focus:border-none"
+					name="emailName"
 					type="email"
 					id="email"
 					value={userById?.email}

@@ -22,7 +22,7 @@ const Banner = (props: Props) => {
 			properties: [
 				{
 					startValue: 0,
-					endValue: -40,
+					endValue: -50,
 					property: "translateY",
 				},
 				{
@@ -47,12 +47,17 @@ const Banner = (props: Props) => {
 		{
 			start: 0,
 			end: 1000,
-			easing: [0.1, 0, 0.1, 0],
+			easing: [0.1, 0.1, 0.2, 0.33],
 			properties: [
 				{
 					startValue: 0,
-					endValue: -30,
+					endValue: -50,
 					property: "translateY",
+				},
+				{
+					startValue: 0,
+					endValue: 0,
+					property: "rotate",
 				},
 				{
 					startValue: 1,
@@ -61,7 +66,7 @@ const Banner = (props: Props) => {
 				},
 				{
 					startValue: 1,
-					endValue: 13,
+					endValue: 1,
 					property: "opacity",
 				},
 			],

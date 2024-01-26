@@ -91,6 +91,30 @@ export async function fetchProducts(
 }
 
 /**
+ * Fetches a list of products from the database.
+ *
+ * @return A Promise resolving to an array of Product objects representing the products.
+ * @throws {Error} - If there is an error fetching the products.
+ *
+ * @example
+ * ?Example usage:
+ * try {
+ *   const products = await fetchAllProducts();
+ *   console.log('Fetched products:', products);
+ * } catch (error) {
+ *   console.error('Error fetching products:', error.message);
+ * }
+ */
+export async function fetchAllProducts() {
+	try {
+		const products = await Product.find();
+		return products;
+	} catch (error: any) {
+		throw new Error(`Failed to fetch products: ${error.message}`);
+	}
+}
+
+/**
  * Fetches a product from the database by its ID.
  *
  * @param {string} id - The ID of the product to fetch.

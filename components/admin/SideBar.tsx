@@ -1,7 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { FaCartPlus, FaFoursquare, FaUser } from "react-icons/fa";
+import {
+	FaCartArrowDown,
+	FaCartPlus,
+	FaEye,
+	FaFoursquare,
+	FaUser,
+} from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { FaBox } from "react-icons/fa6";
 import Link from "next/link";
@@ -22,6 +28,11 @@ const SideBar = ({ fullName, userImg, link }: Props) => {
 			title: "Dashboard",
 			link: "/admin/dashboard",
 			icon: MdDashboard,
+		},
+		{
+			title: "View Products",
+			link: "/admin/get-products",
+			icon: FaEye,
 		},
 		{
 			title: "Add Products",

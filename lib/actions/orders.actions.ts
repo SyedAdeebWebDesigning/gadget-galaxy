@@ -1,8 +1,5 @@
 "use server";
-
-// Import necessary dependencies and modules
 import Order from "../models/orders.models"; // Assuming Order model is defined in a separate file
-import Product from "../models/products.models";
 import { clearCart, fetchOrders } from "./cart.actions"; // Import relevant cart actions
 
 export async function addOrders({
@@ -73,9 +70,42 @@ export async function fetchOrderById(orderId: string): Promise<any[]> {
 
 export async function fetchOrdersByUserId(userId: string) {
 	try {
-		const orders = await Order.find({ userId: userId });
+		const orders = await Order.find({ userId: userId }).sort({
+			createdAt: "desc",
+		});
 		return orders;
 	} catch (error: any) {
 		console.error("Error:", error.message);
+	}
+}
+export async function fetchAllOrders() {
+	try {
+		const orders = await Order.find().sort({ createdAt: "desc" });
+		return orders;
+	} catch (error: any) {
+		console.error("Error:", error.message);
+	}
+}
+
+export async function updateOrderStatus(orderId: string, newStatus: string) {
+	try {
+		// Find the order by ID
+		const order = await Order.findById(orderId);
+
+		// Check if the order exists
+		if (!order) {
+			throw new Error("Order not found");
+		}
+
+		// Update the order status
+		order.orderStatus = newStatus;
+
+		// Save the updated order
+		await order.save();
+
+		// Return the updated order
+		return order;
+	} catch (error: any) {
+		throw new Error(`Error updating order status: ${error.message}`);
 	}
 }
