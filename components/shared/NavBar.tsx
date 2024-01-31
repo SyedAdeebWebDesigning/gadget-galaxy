@@ -25,23 +25,23 @@ const NavBar = async () => {
 		},
 		{
 			title: "Mobiles",
-			link: "/mobiles",
+			link: "/mobiles?page=1",
 		},
 		{
 			title: "Tabs",
-			link: "/tabs",
+			link: "/tabs?page=1",
 		},
 		{
 			title: "Laptops",
-			link: "/laptops",
+			link: "/laptops?page=1",
 		},
 		{
 			title: "Watches",
-			link: "/watches",
+			link: "/watches?page=1",
 		},
 		{
 			title: "Headphones",
-			link: "/headphones",
+			link: "/headphones?page=1",
 		},
 		{
 			title: "Order",

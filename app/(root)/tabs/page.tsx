@@ -1,14 +1,16 @@
+import CategoriesProducts from "@/components/shared/CategoriesProducts";
 type Props = {
 	searchParams: any;
 };
 
-const Tabs = ({ searchParams }: Props) => {
+const Store = ({ searchParams }: Props) => {
 	let pageNo = parseInt(searchParams.page);
 	return (
 		<main className="container">
 			<h3 className="text-4xl text-center my-10">Tabs</h3>
+			<CategoriesProducts pageNo={pageNo} category={"Tabs"} />
 		</main>
 	);
 };
 
-export default Tabs;
+export default Store;

@@ -2,7 +2,12 @@ import React from "react";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { countDocument, fetchProducts } from "@/lib/actions/product.actions";
+import {
+	countCategoryDocument,
+	countDocument,
+	fetchCategories,
+	fetchProducts,
+} from "@/lib/actions/product.actions";
 import {
 	Pagination,
 	PaginationContent,
@@ -18,11 +23,11 @@ type Props = {
 	category: string;
 };
 
-const StoreProducts = async ({ pageNo }: Props) => {
+const CategoriesProducts = async ({ pageNo, category }: Props) => {
 	const pageSize = 6;
 
-	const products: any = await fetchProducts(pageNo, pageSize);
-	const count: number = await countDocument();
+	const products: any = await fetchCategories(pageNo, pageSize, category);
+	const count: number = await countCategoryDocument(category);
 	const totalPages = Math.ceil(count / pageSize);
 	const maxPages = Math.min(totalPages, 3);
 
@@ -73,7 +78,9 @@ const StoreProducts = async ({ pageNo }: Props) => {
 				<PaginationContent className="mx-auto">
 					{pageNo > 1 ? (
 						<PaginationItem>
-							<PaginationPrevious href={`/store/?page=${pageNo - 1}`} />
+							<PaginationPrevious
+								href={`/${category.toLowerCase()}?page=${pageNo - 1}`}
+							/>
 						</PaginationItem>
 					) : (
 						<Button disabled variant={"ghost"}>
@@ -83,7 +90,7 @@ const StoreProducts = async ({ pageNo }: Props) => {
 					{Array.from({ length: maxPages }).map((_: any, i: number | any) => (
 						<PaginationItem key={i}>
 							<PaginationLink
-								href={`/store/?page=${i + 1}`}
+								href={`/${category.toLowerCase()}?page=${i + 1}`}
 								isActive={i + 1 === pageNo}>
 								{i + 1}
 							</PaginationLink>
@@ -97,7 +104,9 @@ const StoreProducts = async ({ pageNo }: Props) => {
 					{pageNo > maxPages && pageNo <= totalPages && (
 						<>
 							<PaginationItem>
-								<PaginationLink href={`/store/?page=${totalPages}`} isActive>
+								<PaginationLink
+									href={`/${category.toLowerCase()}?page=${totalPages}`}
+									isActive>
 									{pageNo}
 								</PaginationLink>
 							</PaginationItem>
@@ -105,7 +114,9 @@ const StoreProducts = async ({ pageNo }: Props) => {
 					)}
 					<PaginationItem>
 						{pageNo < totalPages ? (
-							<PaginationNext href={`/store/?page=${pageNo + 1}`} />
+							<PaginationNext
+								href={`/${category.toLowerCase()}?page=${pageNo + 1}`}
+							/>
 						) : (
 							<Button disabled variant={"ghost"}>
 								<PaginationNext href={``} className="cursor-not-allowed" />
@@ -118,4 +129,4 @@ const StoreProducts = async ({ pageNo }: Props) => {
 	);
 };
 
-export default StoreProducts;
+export default CategoriesProducts;

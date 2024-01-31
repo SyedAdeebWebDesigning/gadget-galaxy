@@ -251,3 +251,44 @@ export async function countDocument(): Promise<number> {
 		throw new Error(`Failed to count documents: ${error.message}`);
 	}
 }
+
+export async function fetchCategories(
+	pageNumber: number,
+	pageSize: number,
+	category: string
+) {
+	const skipAmount = (pageNumber - 1) * pageSize;
+	try {
+		const products = await Product.find({ category: category })
+			.skip(skipAmount)
+			.limit(pageSize);
+		return products;
+	} catch (error: any) {
+		throw new Error(`Failed to fetch products: ${error.message}`);
+	}
+}
+
+/**
+ * Counts the number of documents in the products collection.
+ *
+ * @param {string} productId - The ID of the product to be deleted.
+ * @return {Promise<number>} - A Promise resolving to the count of documents in the products collection.
+ * @throws {Error} - If there is an error counting the documents.
+ *
+ * @example
+ * ?Example usage:
+ * try {
+ *   const count = await countCategoryDocument("Mobiles");
+ *   console.log('Number of documents:', count);
+ * } catch (error) {
+ *   console.error('Error counting documents:', error.message);
+ * }
+ */
+export async function countCategoryDocument(category: string): Promise<number> {
+	try {
+		const count = await Product.countDocuments({ category: category });
+		return count;
+	} catch (error: any) {
+		throw new Error(`Failed to count documents: ${error.message}`);
+	}
+}

@@ -8,7 +8,7 @@ const Store = ({ searchParams }: Props) => {
 	return (
 		<main className="container">
 			<h3 className="text-4xl text-center my-10">Store</h3>
-			<StoreProducts pageNo={pageNo} />
+			<StoreProducts pageNo={pageNo} category={searchParams.category} />
 		</main>
 	);
 };
