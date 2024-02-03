@@ -23,7 +23,7 @@ export default async function Home() {
 					id="card-banner">
 					<CardBanner />
 				</div>
-				<div className="bg-gradient-to-t from-[#282828] to-[#272727] h-[80vh] z-20 sticky py-10 bg-white">
+				<div className="bg-gradient-to-t from-[#282828] to-[#272727] h-[80vh]  z-20 py-10 bg-white">
 					<Exclusive />
 				</div>
 				<div className="z-30 bg-white">

@@ -18,9 +18,9 @@ const Exclusive = async (props: Props) => {
 					Exclusive Product
 				</h3>
 				<section className="text-gray-400 body-font">
-					<div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
-						<div className="flex flex-col lg:flex-row lg:space-x-40 justify-center items-center">
-							<div className="relative h-[300px] w-[300px] lg:w-[500px] lg:h-[500px] animate-pulse xl:w-[700px] xl:h-[600px] my-10">
+					<div className="container mx-auto flex px-5 xl:py-24 items-center justify-center flex-col">
+						<div className="flex flex-col lg:flex-row lg:space-x-40 justify-center items-center overflow-y-scroll">
+							<div className="relative h-[300px] w-[300px] lg:w-[500px] lg:h-[500px] animate-pulse xl:w-[700px] xl:h-[600px] xl:my-10">
 								<Image
 									src={product?.imgUrl}
 									alt=""
