@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { addOrder } from "@/lib/actions/orders.actions";
+import { addOrders } from "@/lib/actions/orders.actions";
 import Link from "next/link";
 
 type Props = {
