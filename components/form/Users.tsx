@@ -4,7 +4,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
-import { addUser } from "@/lib/actions/users.actions";
+import { addUser, editUser } from "@/lib/actions/users.actions";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -16,10 +16,13 @@ type Props = {
 		fullName: string;
 	};
 	mongoUser: {
+		_id: string;
+		fullName: string;
 		address: string;
 		state: string;
 		city: string;
 		pinCode: string;
+		isAdmin: boolean;
 	};
 	isPresent: boolean;
 };
@@ -27,15 +30,12 @@ type Props = {
 const Users = ({ userData, mongoUser, isPresent }: Props) => {
 	const router = useRouter();
 	const { userId, imgUrl, email, fullName } = userData;
+	const [name, setName] = useState<string>("");
 	const [address, setAddress] = useState<string>("");
 	const [city, setCity] = useState<string>("");
 	const [state, setState] = useState<string>("");
 	const [pinCode, setPinCode] = useState<string>("");
 	const [isAdmin, setIsAdmin] = useState<boolean>(false);
-
-	if (isPresent) {
-		router.push("/");
-	}
 
 	const handleContinue = () => {
 		try {
@@ -74,6 +74,46 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 			});
 		}
 	};
+	const handleEdit = () => {
+		try {
+			editUser(
+				{ id: mongoUser._id },
+				{
+					userId: userId,
+					imgUrl: imgUrl,
+					email: email,
+					fullName: name || fullName,
+					isAdmin: isAdmin || mongoUser?.isAdmin,
+					address: address || mongoUser?.address,
+					city: city || mongoUser?.city,
+					state: state || mongoUser?.state,
+					pinCode: pinCode || mongoUser.pinCode,
+				}
+			);
+			toast.success(`Details edited successfully`, {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
+			router.push("/");
+		} catch (error: any) {
+			toast.error(`Errors adding details`, {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
+		}
+	};
 
 	return (
 		<div className="container lg:w-2/3 xl:w-1/3 sm:w-2/3 w-full h-[59vh] flex flex-col justify-center">
@@ -84,9 +124,9 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 					<Input
 						type="text"
 						id="fullName"
-						placeholder="Name"
-						disabled
-						value={fullName}
+						placeholder={`${mongoUser.fullName}`}
+						value={name}
+						onChange={(e) => setName(e.target.value)}
 					/>
 				</div>
 				<div className="grid w-full items-center gap-1.5">
@@ -104,7 +144,6 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 					<Textarea
 						placeholder="Flat No. Place/Landmark Street Name"
 						value={address || mongoUser?.address}
-						disabled={isPresent}
 						onChange={(e) => setAddress(e.target.value)}
 					/>
 				</div>
@@ -116,7 +155,6 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 								type="text"
 								id="city"
 								placeholder="City"
-								disabled={isPresent}
 								required
 								value={city || mongoUser?.city}
 								onChange={(e) => setCity(e.target.value)}
@@ -128,7 +166,6 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 								type="text"
 								id="state"
 								placeholder="State"
-								disabled={isPresent}
 								required
 								value={state || mongoUser?.state}
 								onChange={(e) => setState(e.target.value)}
@@ -144,7 +181,6 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 								minLength={6}
 								required
 								placeholder="XXXXXX"
-								disabled={isPresent}
 								value={pinCode || mongoUser?.pinCode}
 								onChange={(e) => setPinCode(e.target.value)}
 							/>
@@ -153,14 +189,11 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 				</div>
 				{isPresent ? (
 					<div>
-						<h3 className="text-md animate-pulse my-2 text-gray-500">
-							Your details have been submitted!
-						</h3>
 						<Button
 							variant={"secondary"}
-							onClick={() => router.back()}
+							onClick={handleEdit}
 							className="w-full">
-							Go back
+							Edit Details
 						</Button>
 					</div>
 				) : (

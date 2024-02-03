@@ -126,6 +126,47 @@ export async function addUser({
 	}
 }
 
+export async function editUser(
+	{ id }: { id: string },
+	{
+		userId,
+		imgUrl,
+		email,
+		fullName,
+		isAdmin,
+		address,
+		city,
+		state,
+		pinCode,
+	}: {
+		userId: string;
+		imgUrl: string;
+		email: string;
+		fullName: string;
+		isAdmin: boolean;
+		address: string;
+		city: string;
+		state: string;
+		pinCode: string;
+	}
+): Promise<void> {
+	try {
+		await Users.findByIdAndUpdate(id, {
+			userId,
+			imgUrl,
+			email,
+			fullName,
+			isAdmin,
+			address,
+			city,
+			state,
+			pinCode,
+		});
+	} catch (error: any) {
+		throw new Error(`Failed to editing user: ${error.message}`);
+	}
+}
+
 /**
  * Fetches a user from the database by their ID.
  *

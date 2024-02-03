@@ -85,8 +85,7 @@ const Footer = (props: Props) => {
 									<Link
 										className="text-gray-500 hover:text-gray-800 transition-all duration-150 ease-in-out"
 										key={i}
-										href={navLink.links}
-									>
+										href={navLink.links}>
 										<h3>{navLink.title}</h3>
 									</Link>
 								))}
@@ -101,14 +100,12 @@ const Footer = (props: Props) => {
 							<SignedIn>
 								<Link
 									href={"/orders"}
-									className="cursor-pointer text-gray-500 hover:text-gray-900 transition-all duration-150 ease-in-out"
-								>
+									className="cursor-pointer text-gray-500 hover:text-gray-900 transition-all duration-150 ease-in-out">
 									<h3 className="">View Orders</h3>
 								</Link>
 								<Link
-									href={"/userProfile"}
-									className="cursor-pointer text-gray-500 hover:text-gray-900 transition-all duration-150 ease-in-out"
-								>
+									href={"/onboarding"}
+									className="cursor-pointer text-gray-500 hover:text-gray-900 transition-all duration-150 ease-in-out">
 									<h3 className="">Manage your account</h3>
 								</Link>
 								<li className="cursor-pointer text-gray-500 hover:text-gray-900 transition-all duration-150 ease-in-out">

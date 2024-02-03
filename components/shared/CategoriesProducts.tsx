@@ -4,9 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
 	countCategoryDocument,
-	countDocument,
 	fetchCategories,
-	fetchProducts,
 } from "@/lib/actions/product.actions";
 import {
 	Pagination,

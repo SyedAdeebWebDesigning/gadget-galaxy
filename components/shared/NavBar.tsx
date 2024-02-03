@@ -1,21 +1,22 @@
 import Image from "next/legacy/image";
 import Link from "next/link";
 import React from "react";
-import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import {
+	SignInButton,
+	SignedIn,
+	SignedOut,
+	SignOutButton,
+} from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs";
 import { MdLogin } from "react-icons/md";
-import { RiMenu3Fill } from "react-icons/ri";
 import { IoBagHandleSharp } from "react-icons/io5";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuLabel,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { fetchUserById } from "@/lib/actions/users.actions";
 import ToUser from "../redirects/toUser";
 import { fetchUserCartLength } from "@/lib/actions/cart.actions";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import OpenTrigger from "./OpenTrigger";
 
 const NavBar = async () => {
 	const navLinks = [
@@ -57,8 +58,8 @@ const NavBar = async () => {
 		},
 	];
 
-	const user: any = await currentUser();
-	if (!user) return null;
+	const user = await currentUser();
+	if (!user || user === null) return null;
 	const userId: string | any = `${user?.id}`;
 	const mongoUser: any = await fetchUserById(userId);
 	if (!mongoUser) <ToUser />;
@@ -70,7 +71,7 @@ const NavBar = async () => {
 	return (
 		<header className="text-gray-100 body-font bg-[#000000]  backdrop-blur-2xl sticky h-20 top-0 bottom-0 w-full z-30">
 			<div className="px-10 mx-auto flex py-5 flex-row items-center justify-between">
-				<a href="/" className="hidden sm:flex object-cover h-10">
+				<Link href="/" className="hidden sm:flex object-cover h-10">
 					<Image
 						alt="logo"
 						width={250}
@@ -79,8 +80,8 @@ const NavBar = async () => {
 						objectFit="contain"
 						priority
 					/>
-				</a>
-				<a href="/" className="sm:hidden h-10">
+				</Link>
+				<Link href="/" className="sm:hidden h-10">
 					<Image
 						alt="logo"
 						width={100}
@@ -89,12 +90,12 @@ const NavBar = async () => {
 						objectFit="contain"
 						priority
 					/>
-				</a>
+				</Link>
 				<nav className="-ml-10 hidden 2xl:flex">
 					{navLinks.map((navLink) => (
-						<a key={navLink.title} href={navLink.link} className="navLinks">
+						<Link key={navLink.title} href={navLink.link} className="navLinks">
 							{navLink.title}
-						</a>
+						</Link>
 					))}
 					{mongoUser?.isAdmin && (
 						<Link href={"/admin"} className="navLinks">
@@ -102,13 +103,34 @@ const NavBar = async () => {
 						</Link>
 					)}
 				</nav>
-				<nav className="flex items-center justify-center space-x-4">
+				<nav className="relative flex items-center justify-center space-x-4">
 					<SignedIn>
-						<div
-							className="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full
-                         h-10 w-10 flex justify-center items-center hover:animate-pulse cursor-pointer">
-							<UserButton />
-						</div>
+						<Sheet>
+							<SheetTrigger>
+								<Avatar className="cursor-pointer rounded-full focus:outline-none focus:select-none ">
+									<AvatarImage
+										src={user?.imageUrl}
+										alt="@user"
+										className="object-cover rounded-full"
+									/>
+									<AvatarFallback>
+										{user.firstName !== null && user?.firstName[0]}
+										{user.lastName !== null && user?.lastName[0]}
+									</AvatarFallback>
+								</Avatar>
+							</SheetTrigger>
+							<SheetContent className="fixed right-0 top-2 h-40">
+								<div className="py-2 px-5">
+									<a href={"/onboarding"}>
+										<Button variant={"link"}>Manage your account</Button>
+									</a>
+									<hr />
+									<SignOutButton>
+										<Button variant={"linkDestructive"}>Logout</Button>
+									</SignOutButton>
+								</div>
+							</SheetContent>
+						</Sheet>
 					</SignedIn>
 					<SignedOut>
 						<SignInButton>
@@ -142,27 +164,7 @@ const NavBar = async () => {
 						</div>
 					</Link>
 					<div className="2xl:hidden">
-						<DropdownMenu>
-							<DropdownMenuTrigger>
-								<RiMenu3Fill className="h-8 w-8 mt-2" />
-							</DropdownMenuTrigger>
-							<DropdownMenuContent className="">
-								{navLinks.map((navLink) => (
-									<a key={navLink.title} href={navLink.link}>
-										<DropdownMenuLabel className="cursor-pointer">
-											{navLink.title}
-										</DropdownMenuLabel>
-									</a>
-								))}
-								{mongoUser?.isAdmin && (
-									<a href={"/admin"} className="">
-										<DropdownMenuLabel className="cursor-pointer">
-											Dashboard
-										</DropdownMenuLabel>
-									</a>
-								)}
-							</DropdownMenuContent>
-						</DropdownMenu>
+						<OpenTrigger navLinks={navLinks} mongoUser={mongoUser} />
 					</div>
 				</nav>
 			</div>
