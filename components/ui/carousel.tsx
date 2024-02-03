@@ -1,19 +1,18 @@
 import * as React from "react";
-import useEmblaCarousel, {
-	type EmblaCarouselType as CarouselApi,
-	type EmblaOptionsType as CarouselOptions,
-	type EmblaPluginType as CarouselPlugin,
-} from "embla-carousel-react";
+import useEmblaCarousel from // type EmblaCarouselType as CarouselApi,
+// type EmblaOptionsType as CarouselOptions,
+// type EmblaPluginType as CarouselPlugin,
+"embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 type CarouselProps = {
-	opts?: CarouselOptions;
-	plugins?: CarouselPlugin[];
+	opts?: any;
+	plugins?: any;
 	orientation?: "horizontal" | "vertical";
-	setApi?: (api: CarouselApi) => void;
+	setApi?: (api: any) => void;
 };
 
 type CarouselContextProps = {
@@ -127,16 +126,14 @@ const Carousel = React.forwardRef<
 					scrollNext,
 					canScrollPrev,
 					canScrollNext,
-				}}
-			>
+				}}>
 				<div
 					ref={ref}
 					onKeyDownCapture={handleKeyDown}
 					className={cn("relative", className)}
 					role="region"
 					aria-roledescription="carousel"
-					{...props}
-				>
+					{...props}>
 					{children}
 				</div>
 			</CarouselContext.Provider>
@@ -209,8 +206,7 @@ const CarouselPrevious = React.forwardRef<
 			)}
 			disabled={!canScrollPrev}
 			onClick={scrollPrev}
-			{...props}
-		>
+			{...props}>
 			<ArrowLeft className="h-4 w-4" />
 			<span className="sr-only">Previous slide</span>
 		</Button>
@@ -238,8 +234,7 @@ const CarouselNext = React.forwardRef<
 			)}
 			disabled={!canScrollNext}
 			onClick={scrollNext}
-			{...props}
-		>
+			{...props}>
 			<ArrowRight className="h-4 w-4" />
 			<span className="sr-only">Next slide</span>
 		</Button>
