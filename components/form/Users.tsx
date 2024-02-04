@@ -124,7 +124,9 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 					<Input
 						type="text"
 						id="fullName"
-						placeholder={`${mongoUser.fullName}`}
+						placeholder={`${
+							mongoUser ? mongoUser?.fullName : "Enter your name"
+						}`}
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 					/>
