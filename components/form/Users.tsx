@@ -116,8 +116,10 @@ const Users = ({ userData, mongoUser, isPresent }: Props) => {
 	};
 
 	return (
-		<div className="container lg:w-2/3 xl:w-1/3 sm:w-2/3 w-full h-[59vh] flex flex-col justify-center">
-			<h4 className="text-4xl my-10 text-center">Complete your details</h4>
+		<div className="container lg:w-2/3 xl:w-1/3 sm:w-2/3 w-full lg:h-[59vh] flex flex-col justify-center">
+			<h4 className="text-4xl my-10 text-center">
+				{isPresent ? "Edit" : "Complete"} your details
+			</h4>
 			<div className="space-y-5 bg-gray-200 p-5 rounded-xl">
 				<div className="grid w-full items-center gap-1.5">
 					<Label>Name</Label>
