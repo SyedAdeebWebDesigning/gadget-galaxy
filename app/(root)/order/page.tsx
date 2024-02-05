@@ -41,9 +41,9 @@ const OrderPage = async (props: Props) => {
 							<div className=" bg-slate-200 rounded-xl m-2" key={order?._id}>
 								<div className="h-full border-2 border-gray-200 p-4 border-opacity-60 rounded-lg overflow-hidden">
 									<div className="lg:h-48 md:h-36 w-full h-36 object-cover object-center relative">
-										<Link href={`/order/${order.orderId}%7D`} className="m-2">
+										<Link href={`/order/${order?.orderId}%7D`} className="m-2">
 											<Image
-												src={order?.cart[0].imgUrl}
+												src={order?.cart[0]?.imgUrl}
 												alt=""
 												className="hover:scale-95 transition-all duration-200 ease-in-out"
 												layout="fill"
@@ -56,7 +56,7 @@ const OrderPage = async (props: Props) => {
 											Order Id: {order._id}
 										</h2>
 										<h1 className="title-font text-lg font-medium text-gray-900 mb-3 line-clamp-1">
-											{order.cart[0].name}{" "}
+											{order.cart[0]?.name}{" "}
 											{order.cart.length > 1 && "+ More Products"}
 										</h1>
 										<p className="leading-relaxed">{order.address}</p>
