@@ -39,7 +39,9 @@ const Exclusive = async (props: Props) => {
 									<p className="my-2 text-xl lg:text-2xl xl:text-3xl">
 										Exclusively on
 									</p>
-									<Image src={"/logo-2.svg"} alt="" width={200} height={100} />
+									<picture>
+										<img src={"/logo-2.svg"} alt="" width={200} height={100} />
+									</picture>
 								</div>
 								<h3 className="text-2xl">
 									At just{" "}

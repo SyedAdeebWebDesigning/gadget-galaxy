@@ -6,6 +6,12 @@ import { Movies } from "@/components/shared/Movies";
 import { fetchUserById } from "@/lib/actions/users.actions";
 import { currentUser } from "@clerk/nextjs";
 
+import dynamic from "next/dynamic";
+
+const NoSSR = dynamic(() => import("@/components/shared/Exclusive"), {
+	ssr: false,
+});
+
 export default async function Home() {
 	const user: any = await currentUser();
 	const mongoUser = await fetchUserById(user?.id);
